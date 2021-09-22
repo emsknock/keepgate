@@ -12,7 +12,7 @@ CREATE TABLE events (
 );
 
 CREATE TABLE tickets (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     event_id INTEGER REFERENCES events,
     holder TEXT,
     extra_info TEXT
