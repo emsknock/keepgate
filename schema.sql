@@ -16,4 +16,4 @@ CREATE TABLE tickets (
     event_id INTEGER REFERENCES events,
     holder TEXT,
     extra_info TEXT
-)
+);
