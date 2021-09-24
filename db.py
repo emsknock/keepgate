@@ -9,8 +9,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 connection = SQLAlchemy(app)
 
-def done():
-    connection.session.execute()
+def commit():
+    connection.session.commit()
 
 def new_user(username, password):
     connection.session.execute(
@@ -20,7 +20,7 @@ def new_user(username, password):
             "passhash": generate_password_hash(password)
         }
     )
-    done()
+    commit()
 
 def check_user(username, password):
     result = connection.session.execute(
@@ -42,7 +42,7 @@ def new_ticket(event_id, ticketholder, extra_info):
             "extra_info": extra_info
         }
     )
-    done()
+    commit()
 
 def get_tickets(user_id):
     result = connection.session.execute(
