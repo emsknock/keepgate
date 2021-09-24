@@ -43,3 +43,9 @@ def new_ticket(event_id, ticketholder, extra_info):
         }
     )
     done()
+
+def get_tickets(user_id):
+    result = connection.session.execute(
+        "SELECT (event_id, holder) FROM tickets"
+    )
+    return result.fetchall()
