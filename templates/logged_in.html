@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block content %}
+<h1>Keepgate</h1>
+<p>Logged in as {{ username }}</p>
+<h2>Tickets</h2>
+<ul>
+    {% for ticket in tickets %}
+        <li>{{ ticket }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
