@@ -2,6 +2,7 @@ from app import app
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 
+import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
@@ -33,8 +34,9 @@ def check_user(username, password):
 
 def new_ticket(event_id, ticketholder, extra_info):
     connection.session.execute(
-        "INSERT INTO tickets (event_id, holder, extra_info) VALUES (:event_id, :holder, :extra_info)",
+        "INSERT INTO tickets (id, event_id, holder, extra_info) VALUES (:id, :event_id, :holder, :extra_info)",
         {
+            "id": uuid.uuid4(),
             "event_id": event_id,
             "holder": ticketholder,
             "extra_info": extra_info
