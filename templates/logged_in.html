@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
 {% block content %}
-<h1>Keepgate</h1>
-<p>Logged in as {{ username }}</p>
-<h2>Tickets</h2>
-<ul>
-    {% for ticket in tickets %}
-        <li>{{ ticket }}</li>
-    {% endfor %}
-</ul>
+<div class="m-4">
+    <h1 class="text-4xl font-bold">Keepgate</h1>
+    <p class="text-sm uppercase">Logged in as {{ username }}</p>
+    <h2 class="mt-8 text-lg">Events</h2>
+    <ul>
+        {% for title, date in events %}
+            <li class="p-2 border border-gray-200">{{ title }} — {{ date }}</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
