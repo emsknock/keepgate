@@ -1,11 +1,16 @@
 from app import app
 from flask_sqlalchemy import SQLAlchemy
-from os import getenv
+import os
+import re
 
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 connection = SQLAlchemy(app)
 
