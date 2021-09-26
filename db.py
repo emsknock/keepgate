@@ -32,6 +32,25 @@ def check_user(username, password):
     user = result.fetchone()
     return (user is not None) and check_password_hash(user.passhash, password)
 
+def new_event(user_id, title, date):
+    connection.session.execute(
+        "INSERT INTO events (user_id, title, date) VALUES (:user, :title, :date)",
+        {
+            "user": "2",
+            "title": "Test event",
+            "date": "2021-09-21"
+        }
+    )
+
+def get_events(user_id):
+    result = connection.session.execute(
+        "SELECT title, date FROM events e WHERE e.user_id = :user_id",
+        {
+            "user_id": user_id
+        }
+    )
+    return result.fetchall()
+
 def new_ticket(event_id, ticketholder, extra_info):
     connection.session.execute(
         "INSERT INTO tickets (id, event_id, holder, extra_info) VALUES (:id, :event_id, :holder, :extra_info)",
