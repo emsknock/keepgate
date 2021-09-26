@@ -8,7 +8,7 @@ def index():
     return render_template(
         "logged_in.html",
         username="Test",
-        events=db.get_events(2)
+        events=db.get_events(1)
     )
 
 @app.route("/login", methods=["GET", "POST"])
