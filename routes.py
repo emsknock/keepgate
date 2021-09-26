@@ -1,9 +1,15 @@
 from app import app
 from flask import render_template
 
+import db
+
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template(
+        "logged_in.html",
+        username="Test",
+        events=db.get_events(2)
+    )
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
