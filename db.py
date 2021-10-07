@@ -1,9 +1,6 @@
 from app import app
 from flask_sqlalchemy import SQLAlchemy
 import os
-import re
-
-import uuid
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL.startswith("postgres://"):
