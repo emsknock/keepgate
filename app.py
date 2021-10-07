@@ -1,5 +1,4 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 from os import getenv
 
 app = Flask(__name__)
