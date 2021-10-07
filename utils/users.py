@@ -20,3 +20,13 @@ def check_login(username, password):
     )
     user = result.fetchone()
     return user and check_password_hash(user.passhash, password)
+
+def is_username_free(username):
+    result = exec(
+        "SELECT id FROM users WHERE username=:username",
+        {
+            "username": username
+        }
+    )
+    user = result.fetchone()
+    return not user

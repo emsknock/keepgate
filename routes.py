@@ -36,7 +36,17 @@ def logout():
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
-    return ""
+    if request.method == "GET":
+        return "TODO" # TODO: Sign up page
+    else:
+        username = request.form["username"]
+        password = request.form["password"]
+        if is_username_free(username):
+            new_user(username, password)
+            session["username"] = username
+            return redirect("/")
+        else:
+            return "TODO" # TODO: Username taken
 
 @app.route("/event/<id>", methods=["GET", "DELETE"])
 def event():
