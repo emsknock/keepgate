@@ -7,8 +7,6 @@ from flask import (
     session
 )
 
-from utils.users import *
-
 @app.route("/")
 def index():
     if "username" not in session or session["username"] == "":
