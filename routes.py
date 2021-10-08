@@ -37,7 +37,7 @@ def signout():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "GET":
-        return "TODO" # TODO: Sign up page
+        return render_template("signup.html")
     else:
         username = request.form["username"]
         password = request.form["password"]
