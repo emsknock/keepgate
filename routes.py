@@ -25,6 +25,7 @@ def signin():
         password = request.form["pass"]
         if users.check_signin(username, password):
             session["username"] = username
+            session["user_id"] = users.get_id_by_username(username)
             return redirect("/")
         else:
             return "TODO" # TODO: Wrong username or password

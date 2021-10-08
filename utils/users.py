@@ -11,6 +11,15 @@ def new_user(username, password):
     )
     commit()
 
+def get_id_by_username(username):
+    result = exec(
+        "SELECT id FROM users WHERE username:=username",
+        {
+            "username": username
+        }
+    )
+    return result.fetchone()
+
 def check_signin(username, password):
     result = exec(
         "SELECT id, password FROM users WHERE username=:username",
