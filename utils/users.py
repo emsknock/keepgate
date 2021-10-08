@@ -11,7 +11,7 @@ def new_user(username, password):
     )
     commit()
 
-def check_login(username, password):
+def check_signin(username, password):
     result = exec(
         "SELECT id, password FROM users WHERE username=:username",
         {

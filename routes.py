@@ -13,24 +13,24 @@ from utils.users import *
 def index():
     return render_template("index.html")
 
-@app.route("/login", methods=["GET", "POST"])
-def login():
+@app.route("/signin", methods=["GET", "POST"])
+def signin():
     if request.method == "GET":
         if "username" not in session or session["username"] == "":
-            return render_template("login.html")
+            return render_template("signin.html")
         else:
             return redirect("/")
     else:
         username = request.form["username"]
         password = request.form["pass"]
-        if users.check_login(username, password):
+        if users.check_signin(username, password):
             session["username"] = username
             return redirect("/")
         else:
             return "TODO" # TODO: Wrong username or password
 
-@app.route("/logout")
-def logout():
+@app.route("/signout")
+def signout():
     del session["username"]
     return redirect("/")
 
