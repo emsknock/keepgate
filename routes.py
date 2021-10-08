@@ -11,7 +11,13 @@ from utils.users import *
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    if "username" not in session or session["username"] == "":
+        return render_template("index.html")
+    else:
+        return render_template(
+            "index_logged_in.html",
+            username=session["username"]
+        )
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
