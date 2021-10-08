@@ -1,4 +1,4 @@
-from utils import users
+from utils import events, users
 from app import app
 from flask import (
     render_template,
@@ -14,7 +14,8 @@ def index():
     else:
         return render_template(
             "index_logged_in.html",
-            username=session["username"]
+            username=session["username"],
+            own_events=events.get_events_by_user_id(session["user_id"])
         )
 
 @app.route("/signin", methods=["GET", "POST"])
