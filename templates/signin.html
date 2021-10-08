@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block content %}
+<div class="w-screen h-screen flex justify-center items-center">
+    <div class="px-5 py-4 bg-gray-50 rounded-lg w-2/4">
+        <div class="flex justify-between items-center pb-3">
+            <h1 class="flex space-x-4 text-3xl">
+                <span class="font-bold">Keepgate</span>
+                <span class="opacity-60">Sign in</span>
+            </h1>
+            <a href="/signup" class="pointer text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">Sign up</a>
+        </div>
+        <form action="/login" class="flex flex-col space-y-4 py-2 border-t">
+            <label for="username">
+                <div class="text-sm uppercase mb-1 opacity-60">Username</div>
+                <input type="text" id="username" class="px-3 py-2 w-full border border-gray-200 rounded" />
+            </label>
+            <label for="password">
+                <div class="text-sm uppercase mb-1 opacity-60">Password</div>
+                <input type="password" id="password" class="px-3 py-2 w-full border border-gray-200 rounded" />
+            </label>
+            <button type="submit" class="pointer text-sm uppercase px-4 py-2 rounded text-white bg-green-500 hover:bg-green-400">
+                Sign in
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
