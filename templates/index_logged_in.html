@@ -11,23 +11,22 @@
 <div>
     <article class="m-4">
         <h2>Your events:</h2>
-        <ul class="mt-2 flex flex-col space-y-2">
-            <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
-                <a href="#" class="text-blue-800 font-bold capitalize flex-grow">Sample event</a>
-                <span class="text-sm uppercase opacity-60">60 tickets</span>
-                <span class="text-sm uppercase opacity-60">40 passes</span>
-                <span class="text-sm uppercase opacity-60">3 organisers</span>
-                <span class="text-sm uppercase opacity-60">5.12.2021</span>
-            </li>
-        </ul>
         <ul class="my-2 flex flex-col space-y-2">
-            <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
-                <a href="#" class="text-blue-800 font-bold capitalize flex-grow">Sept 21 celebration</a>
-                <span class="text-sm uppercase opacity-60">50 tickets</span>
-                <span class="text-sm uppercase opacity-60">20 passes</span>
-                <span class="text-sm uppercase opacity-60">6 organisers</span>
-                <span class="text-sm uppercase opacity-60">21.9.2022</span>
-            </li>
+            {% for id, title, date in own_events %}
+                <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
+                    <a href="#" class="text-blue-800 font-bold capitalize flex-grow">{{ title }}</a>
+                    <span class="text-sm uppercase opacity-60">60 tickets</span>
+                    <span class="text-sm uppercase opacity-60">40 passes</span>
+                    <span class="text-sm uppercase opacity-60">3 organisers</span>
+                    <span class="text-sm uppercase opacity-60">
+                        {% if date %}
+                            {{ date }}
+                        {% else %}
+                            No date
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
         </ul>
         <h2>Events you are an organiser of:</h2>
         <ul class="my-2 flex flex-col space-y-2">
