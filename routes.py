@@ -28,7 +28,7 @@ def signin():
             return redirect("/")
     else:
         username = request.form["username"]
-        password = request.form["pass"]
+        password = request.form["password"]
         if users.check_signin(username, password):
             session["username"] = username
             session["user_id"] = users.get_id_by_username(username)
