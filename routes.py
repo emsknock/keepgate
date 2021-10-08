@@ -50,8 +50,8 @@ def signup():
         confirm_password = request.form["confirm-password"]
         if new_password != confirm_password:
             return "TODO" # TODO: Passwords don't match
-        if is_username_free(username):
-            new_user(username, new_password)
+        if users.is_username_free(username):
+            users.new_user(username, new_password)
             session["username"] = username
             session["user_id"] = users.get_id_by_username(username)
             return redirect("/")
