@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Index{% endblock %}
 {% block content %}
-<h1>Keepgate</h1>
+<div class="w-screen h-screen flex justify-center items-center">
+    <div class="px-5 py-4 bg-gray-50 rounded-lg w-2/4">
+        <h1 class="text-3xl font-bold">Keepgate</h1>
+        <p class="py-4 border-b">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque laoreet erat sed sagittis tincidunt. Duis id est augue. Duis eget varius ex, nec imperdiet augue. Vestibulum quis velit in justo suscipit mollis fringilla sit amet augue. Suspendisse nec mi vel eros rhoncus aliquet. Donec sodales orci eu enim vulputate, et posuere ipsum pretium. Suspendisse et posuere odio, consectetur dictum nibh. Aliquam eget dictum lorem, vel placerat urna. Duis molestie enim eu augue semper, non convallis neque ultrices. Praesent dignissim sapien et commodo aliquet. Sed dignissim suscipit ligula, eu porttitor dolor tempus nec. Etiam vel justo molestie, maximus nisl id, rutrum ligula.
+        </p>
+        <p class="mt-4 flex space-x-2">
+            <a href="/signup" class="pointer text-sm uppercase w-2/4 px-4 py-2 rounded text-center text-white bg-blue-500 hover:bg-blue-400">Sign up</a>
+            <a href="/login" class="pointer text-sm uppercase w-2/4 px-4 py-2 rounded text-center text-white bg-green-500 hover:bg-green-400">Log in</a>
+        </p>
+    </div>
+</div>
 {% endblock %}
