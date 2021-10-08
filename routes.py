@@ -16,10 +16,10 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        if session["username"]:
-            return redirect("/")
+        if "username" not in session or session["username"] == "":
+            return render_template("login.html")
         else:
-            return "TODO" # TODO: Login page
+            return redirect("/")
     else:
         username = request.form["username"]
         password = request.form["pass"]
