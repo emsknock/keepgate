@@ -47,10 +47,14 @@ def signup():
         return render_template("signup.html")
     else:
         username = request.form["username"]
-        password = request.form["password"]
+        new_password = request.form["new-password"]
+        confirm_password = request.form["confirm-password"]
+        if new_password != confirm_password:
+            return "TODO" # TODO: Passwords don't match
         if is_username_free(username):
-            new_user(username, password)
+            new_user(username, new_password)
             session["username"] = username
+            session["user_id"] = users.get_id_by_username(username)
             return redirect("/")
         else:
             return "TODO" # TODO: Username taken
