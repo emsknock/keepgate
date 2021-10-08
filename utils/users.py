@@ -18,7 +18,7 @@ def get_id_by_username(username):
             "username": username
         }
     )
-    return result.fetchone()
+    return result.fetchone()[0]
 
 def check_signin(username, password):
     result = exec(
