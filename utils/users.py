@@ -13,7 +13,7 @@ def new_user(username, password):
 
 def get_id_by_username(username):
     result = exec(
-        "SELECT id FROM users WHERE username:=username",
+        "SELECT id FROM users WHERE username=:username",
         {
             "username": username
         }
@@ -22,7 +22,7 @@ def get_id_by_username(username):
 
 def check_signin(username, password):
     result = exec(
-        "SELECT id, password FROM users WHERE username=:username",
+        "SELECT id, passhash FROM users WHERE username=:username",
         {
             "username": username
         }
