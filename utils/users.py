@@ -1,6 +1,18 @@
 from db import exec, commit
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from functools import wraps
+from flask import g, request, redirect, url_for, session
+
+def requires_signin(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "username" in session and session["username"] != "":
+            return f(*args, **kwargs)
+        else:
+            return redirect("/")
+    return decorated_function
+
 def new_user(username, password):
     exec(
         "INSERT INTO users (username, passhash) VALUES (:username, :passhash)",
