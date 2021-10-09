@@ -15,7 +15,7 @@ def new_event(user_id, title, extra_info = None, date = None):
         }
     )
     commit()
-    return id
+    return id.fetchone()[0]
 
 def get_detailed_event_list(user_id):
     result = exec(
