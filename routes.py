@@ -15,7 +15,7 @@ def index():
         return render_template(
             "index_logged_in.html",
             username=session["username"],
-            own_events=events.get_events_by_user_id(session["user_id"])
+            own_events=events.get_detailed_event_list(session["user_id"])
         )
 
 @app.route("/signin", methods=["GET", "POST"])
