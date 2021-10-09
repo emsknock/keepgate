@@ -62,9 +62,18 @@ def signup():
 def event():
     return ""
 
-@app.route("/event", methods=["POST"])
+@app.route("/event", methods=["GET", "POST"])
+@users.requires_signin
 def new_event():
-    return ""
+    if request.method == "GET":
+        return render_template("new_event.html")
+    else:
+        events.new_event(
+            session["user_id"],
+            request.form["title"],
+            request.form["extra-info"],
+            request.form["date"]
+        )
 
 @app.route("/ticket/<id>", methods=["GET", "DELETE"])
 def ticket():
