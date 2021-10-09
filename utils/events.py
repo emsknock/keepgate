@@ -15,9 +15,15 @@ def new_event(user_id, title, extra_info = None, date = None):
     )
     commit()
 
-def get_events_by_user_id(user_id):
+def get_detailed_event_list(user_id):
     result = exec(
-        "SELECT id, title, date FROM events WHERE user_id=:user_id",
+        """
+        SELECT e.id, e.title, e.date, e.extra_info,
+               COUNT(t.id) as ticket_count
+        FROM events e LEFT JOIN tickets t ON e.id = t.event_id
+        WHERE e.user_id = :user_id
+        GROUP BY e.id
+        """,
         {
             "user_id": user_id
         }
