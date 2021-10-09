@@ -9,22 +9,22 @@ from flask import (
 
 @app.route("/")
 def index():
-    if "username" not in session or session["username"] == "":
-        return render_template("index.html")
-    else:
+    if users.is_signed_in(session):
         return render_template(
             "index_logged_in.html",
             username=session["username"],
             own_events=events.get_detailed_event_list(session["user_id"])
         )
+    else:
+        return render_template("index.html")
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
     if request.method == "GET":
-        if "username" not in session or session["username"] == "":
-            return render_template("signin.html")
-        else:
+        if users.is_signed_in(session):
             return redirect("/")
+        else:
+            return render_template("signin.html")
     else:
         username = request.form["username"]
         password = request.form["password"]
@@ -37,7 +37,8 @@ def signin():
 
 @app.route("/signout")
 def signout():
-    del session["username"]
+    if users.is_signed_in(session):
+        del session["username"]
     return redirect("/")
 
 @app.route("/signup", methods=["GET", "POST"])
