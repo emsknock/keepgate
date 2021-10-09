@@ -63,9 +63,10 @@ def signup():
 @users.requires_signin
 def event(id):
     if request.method == "GET":
-        return render_template(
-            "event.html"
-        )
+        return "TODO — Event page"
+        # return render_template(
+        #     "event.html"
+        # )
     else:
         return "TODO" # TODO: Delete event
 
