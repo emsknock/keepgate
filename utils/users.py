@@ -13,6 +13,13 @@ def requires_signin(f):
             return redirect("/")
     return decorated_function
 
+def is_signed_in(session): return (
+    "username" in session and
+    "user_id" in session and
+    session["username"] != "" and
+    session["user_id"] != ""
+)
+
 def new_user(username, password):
     exec(
         "INSERT INTO users (username, passhash) VALUES (:username, :passhash)",
