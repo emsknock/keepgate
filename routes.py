@@ -33,7 +33,7 @@ def signin():
             session["user_id"] = users.get_id_by_username(username)
             return redirect("/")
         else:
-            return "TODO" # TODO: Wrong username or password
+            return "TODO — Wrong username or password" # TODO: Wrong username or password
 
 @app.route("/signout")
 def signout():
@@ -50,14 +50,14 @@ def signup():
         new_password = request.form["new-password"]
         confirm_password = request.form["confirm-password"]
         if new_password != confirm_password:
-            return "TODO" # TODO: Passwords don't match
+            return "TODO — Passwords don't match" # TODO: Passwords don't match
         if users.is_username_free(username):
             users.new_user(username, new_password)
             session["username"] = username
             session["user_id"] = users.get_id_by_username(username)
             return redirect("/")
         else:
-            return "TODO" # TODO: Username taken
+            return "TODO — Username taken" # TODO: Username taken
 
 @app.route("/event/<id>", methods=["GET", "DELETE"])
 @users.requires_signin
@@ -68,7 +68,7 @@ def event(id):
         #     "event.html"
         # )
     else:
-        return "TODO" # TODO: Delete event
+        return "TODO — Event deletion" # TODO: Delete event
 
 @app.route("/event", methods=["GET", "POST"])
 @users.requires_signin
