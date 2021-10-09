@@ -60,8 +60,12 @@ def signup():
             return "TODO" # TODO: Username taken
 
 @app.route("/event/<id>", methods=["GET", "DELETE"])
-def event():
-    return ""
+@users.requires_signin
+def event(id):
+    if request.method == "GET":
+        return f"Event {id}"
+    else:
+        return "TODO" # TODO: Delete event
 
 @app.route("/event", methods=["GET", "POST"])
 @users.requires_signin
