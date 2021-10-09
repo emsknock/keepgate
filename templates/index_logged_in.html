@@ -17,11 +17,11 @@
                 <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
                     <a href="#" class="text-blue-800 font-bold capitalize flex-grow">{{ title }}</a>
                     <span class="text-sm uppercase opacity-60">
-                        {{% if ticket_count == 1 %}}
+                        {% if ticket_count == 1 %}
                             1 ticket
-                        {{% else %}}
+                        {% else %}
                             {{ ticket_count }} tickets 
-                        {{% endif %}}
+                        {% endif %}
                     </span>
                     <!--
                     <span class="text-sm uppercase opacity-60">40 passes</span>
