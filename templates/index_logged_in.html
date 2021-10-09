@@ -16,7 +16,13 @@
             {% for id, title, date, extra_info, ticket_count in own_events %}
                 <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
                     <a href="#" class="text-blue-800 font-bold capitalize flex-grow">{{ title }}</a>
-                    <span class="text-sm uppercase opacity-60">60 tickets</span>
+                    <span class="text-sm uppercase opacity-60">
+                        {{% if ticket_count == 1 %}}
+                            1 ticket
+                        {{% else %}}
+                            {{ ticket_count }} tickets 
+                        {{% endif %}}
+                    </span>
                     <span class="text-sm uppercase opacity-60">40 passes</span>
                     <span class="text-sm uppercase opacity-60">3 organisers</span>
                     <span class="text-sm uppercase opacity-60">
