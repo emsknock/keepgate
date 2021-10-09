@@ -12,7 +12,7 @@
     <article class="m-4">
         <h2>Your events:</h2>
         <ul class="my-2 flex flex-col space-y-2">
-            {% for id, title, date in own_events %}
+            {% for id, title, date, extra_info, ticket_count in own_events %}
                 <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
                     <a href="#" class="text-blue-800 font-bold capitalize flex-grow">{{ title }}</a>
                     <span class="text-sm uppercase opacity-60">60 tickets</span>
