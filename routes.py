@@ -69,12 +69,13 @@ def new_event():
     if request.method == "GET":
         return render_template("new_event.html")
     else:
-        events.new_event(
+        event_id = events.new_event(
             session["user_id"],
             request.form["title"],
             request.form["extra-info"],
             request.form["date"]
         )
+        return redirect(f"/event/{event_id}")
 
 @app.route("/ticket/<id>", methods=["GET", "DELETE"])
 def ticket():
