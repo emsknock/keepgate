@@ -18,11 +18,33 @@ def new_ticket(event_id, user_id = None, extra_info = None):
     commit()
     return id.fetchone()[0]
 
-def get_ticket_count_for_event(event_id):
-    result = exec(
-        "SELECT COUNT(*) FROM events WHERE event_id=:event_id",
+def stamp_ticket(id, user_id):
+    exec(
+        """
+        UPDATE tickets
+        SET stamped = 'true',
+            stamped_at = CURRENT_TIMESTAMP,
+            stamped_by = :user_id
+        WHERE id = :id
+        """,
         {
-            "event_id": event_id
+            "id": id,
+            "user_id": user_id
         }
     )
-    return result.fetchone()[0]
+    commit()
+
+def unstamp_ticket(id):
+    exec(
+        """
+        UPDATE tickets
+        SET stamped = 'false',
+            stamped_at = NULL,
+            stamped_by = NULL
+        WHERE id = :id
+        """,
+        {
+            "id": id
+        }
+    )
+    commit()
