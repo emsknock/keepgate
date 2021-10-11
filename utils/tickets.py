@@ -1,12 +1,14 @@
 from db import exec, commit
+from uuid import uuid4
 
 def new_ticket(event_id, user_id = None, extra_info = None):
     exec(
         """
-        INSERT INTO tickets (event_id, user_id, extra_info)
-        VALUES (:event_id, :user_id, :extra_info)
+        INSERT INTO tickets (id, event_id, user_id, extra_info)
+        VALUES (:id, :event_id, :user_id, :extra_info)
         """,
         {
+            "id": uuid4(),
             "event_id": event_id,
             "user_id": user_id,
             "extra_info": extra_info,
