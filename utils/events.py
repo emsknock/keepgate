@@ -48,3 +48,21 @@ def get_event_info(event_id):
         }
     )
     return result.fetchone()
+
+def update_event_data(event_id, title, date, extra_info):
+    exec(
+        """
+        UPDATE events
+        SET title = :title,
+            date = :date,
+            extra_info = :extra_info
+        WHERE id = :event_id
+        """,
+        {
+            "event_id": event_id,
+            "title": title,
+            "date": date,
+            "extra_info": extra_info
+        }
+    )
+    commit()
