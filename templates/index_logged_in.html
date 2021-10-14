@@ -26,7 +26,7 @@
                         {% if organiser_count == 1 %} 1 organiser {% else %} {{ organiser_count }} organisers {% endif %}
                     </span>
                     <span class="text-sm uppercase opacity-60">
-                        {% if date %} {{ date }} {% else %} No date {% endif %}
+                        {% if date %} {{ date.strftime("%Y-%m-%d") }} {% else %} No date {% endif %}
                     </span>
                 </li>
             {% endfor %}
