@@ -32,3 +32,19 @@ def get_detailed_event_list(user_id):
         }
     )
     return result.fetchall()
+
+def get_event_info(event_id):
+    result = exec(
+        """
+        SELECT id, title, date, extra_info,
+               (SELECT COUNT(*) FROM tickets WHERE event_id = :event_id) as ticket_count,
+               (SELECT COUNT(*) FROM passes WHERE event_id = :event_id) as pass_count,
+               (SELECT COUNT(*) FROM organisers WHERE event_id = :event_id) as organiser_count
+        FROM events
+        WHERE id = :event_id
+        """,
+        {
+            "event_id": event_id
+        }
+    )
+    return result.fetchone()
