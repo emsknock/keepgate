@@ -3,6 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from functools import wraps
 from flask import redirect, session
+from secrets import token_hex
 
 def new_user(username, password):
     exec(
@@ -62,9 +63,13 @@ def is_signed_in(): return (
 def signin(username):
     session["username"] = username
     session["user_id"] = get_id_by_username("username")
+    session["csrf_token"] = token_hex(16)
 
 def signout():
     if "username" in session:
         del session["username"]
     if "user_id" in session:
         del session["user_id"]
+
+def check_csrf(request):
+    return request.form and request.form["csrf"] == session["csrf_token"]
