@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Event{% endblock %}
+{% block title %}{{ event.title }}{% endblock %}
 {% block content %}
 <div class="w-screen h-screen flex justify-center items-center">
     <div class="px-4 py-4 bg-gray-50 rounded-lg">
-        <form action="/event" method="post" class="flex flex-col space-y-4">
+        <form action="/event/{{ event.id }}" method="post" class="flex flex-col space-y-4">
             <div class="flex justify-between items-center space-x-4 pb-3 border-b">
                 <input type="text" id="title" name="title" placeholder="Event title" class="text-xl px-2 py-1 flex-grow border border-gray-200 rounded" value="{{ event.title }}" />
                 <a href="/" class="flex-shrink-0 w-24 text-center cursor-pointer text-sm uppercase px-4 py-2 rounded text-red-800 bg-blue-50 hover:bg-blue-100">Cancel</a>
