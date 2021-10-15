@@ -36,7 +36,7 @@ def get_detailed_event_list(user_id):
 def get_event_info(event_id):
     result = exec(
         """
-        SELECT id, title, date, extra_info,
+        SELECT id, title, date, extra_info, user_id,
                (SELECT COUNT(*) FROM tickets WHERE event_id = :event_id) as ticket_count,
                (SELECT COUNT(*) FROM passes WHERE event_id = :event_id) as pass_count,
                (SELECT COUNT(*) FROM organisers WHERE event_id = :event_id) as organiser_count
@@ -66,3 +66,9 @@ def update_event_data(event_id, title, extra_info = None, date = None):
         }
     )
     commit()
+
+def does_user_own_event(user_id, event_id):
+    try:
+        return get_event_info(event_id).user_id == user_id
+    except:
+        return False

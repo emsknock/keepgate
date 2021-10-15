@@ -68,6 +68,9 @@ def signup():
 @app.route("/event/<id>", methods=["GET", "POST"])
 @users.requires_signin
 def event(id):
+    if not events.does_user_own_event(session["user_id"], id):
+        flash("not_own_event")
+        return redirect("/")
     if request.method == "GET":
         return render_template(
             "event.html",

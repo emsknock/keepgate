@@ -10,6 +10,17 @@
     </span>
 </div>
 <div>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="mx-4 bg-red-400 text-white p-4 rounded">
+                {% for message in messages %}
+                <li >
+                    {% if message == "not_own_event" %} You do not own that event {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     <article class="m-4">
         <h2>Your events:</h2>
         <ul class="my-2 flex flex-col space-y-2">
