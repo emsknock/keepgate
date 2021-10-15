@@ -14,7 +14,7 @@
                     <span class="opacity-60">Date (optional)</span>
                     <button type="button" onclick="document.getElementById('date').value = ''" class="text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 rounded-full">Clear</button>
                 </div>
-                <input type="date" id="date" name="date" class="px-3 py-2 w-full border border-gray-200 rounded" value="{{ event.date.strftime("%Y-%m-%d") }}" />
+                <input type="date" id="date" name="date" class="px-3 py-2 w-full border border-gray-200 rounded" value="{{ event.date.strftime("%Y-%m-%d") if event.date else "" }}" />
             </label>
             <label for="extra-info">
                 <div class="text-sm uppercase mb-1 flex justify-between">
