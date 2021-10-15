@@ -51,15 +51,19 @@ def signup():
         username = request.form["username"]
         new_password = request.form["new-password"]
         confirm_password = request.form["confirm-password"]
+        can_make_user = True
         if new_password != confirm_password:
-            return "TODO — Passwords don't match" # TODO: Passwords don't match
-        if users.is_username_free(username):
-            users.new_user(username, new_password)
-            session["username"] = username
-            session["user_id"] = users.get_id_by_username(username)
-            return redirect("/")
-        else:
-            return "TODO — Username taken" # TODO: Username taken
+            flash("password_nomatch")
+            can_make_user = False
+        if not users.is_username_free(username):
+            flash("username_taken")
+            can_make_user = False
+        if not can_make_user:
+            return redirect("/signup")
+        users.new_user(username, new_password)
+        session["username"] = username
+        session["user_id"] = users.get_id_by_username(username)
+        return redirect("/")
 
 @app.route("/event/<id>", methods=["GET", "POST"])
 @users.requires_signin
