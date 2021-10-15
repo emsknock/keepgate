@@ -1,4 +1,4 @@
-from utils import events, users
+from utils import events, users, tickets
 from app import app
 from flask import (
     render_template,
@@ -100,8 +100,12 @@ def new_event():
         return redirect(f"/event/{event_id}")
 
 @app.route("/ticket/<id>", methods=["GET", "DELETE"])
-def ticket():
-    return ""
+def ticket(id):
+    return render_template(
+        "ticket_display.html",
+        event=events.get_event_info(3),
+        ticket=tickets.get_ticket(id)
+    )
 
 @app.route("/ticket", methods=["POST"])
 def new_ticket():
