@@ -2,7 +2,7 @@ from db import exec, commit
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from functools import wraps
-from flask import g, request, redirect, url_for, session
+from flask import redirect, session
 
 def new_user(username, password):
     exec(
