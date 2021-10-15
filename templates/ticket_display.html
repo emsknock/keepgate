@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ event.title }} • Ticket{% endblock %}
+{% block content %}
+{% if not ticket %}
+    {% set ticket_status = "no_ticket" %}
+    {% set bg_class = "bg-red-500" %}
+    {% set icon = "fa-times" %}
+{% elif ticket.event_id != event.id %}
+    {% set ticket_status = "wrong_event" %}
+    {% set bg_class = "bg-red-500" %}
+    {% set icon = "fa-times" %}
+{% elif not ticket.stamped %} 
+    {% set ticket_status = "not_stamped" %}
+    {% set bg_class = "bg-green-500" %}
+    {% set icon = "fa-check-circle" %}
+{% else %}
+    {% set ticket_status = "stamped" %}
+    {% set bg_class = "bg-yellow-500" %}
+    {% set icon = "fa-certificate" %}
+{% endif %}
+<div class="w-screen h-screen p-4 space-y-3 flex flex-col text-white {{ bg_class }}">
+    <div class="text-center text-xs font-mono opacity-40">{{ ticket.id }}</div>
+    <div class="text-center h-40">
+        <i class="fas {{ icon }} fa-10x duration-1000"></i>
+    </div>
+    <div class="text-center">
+        {% if ticket_status == "no_ticket" %}
+            <div class="text-5xl font-bold">Invalid</div>
+            <div class="text-sm uppercase mt-2">Ticket doesn't exist</div>
+        {% elif ticket_status == "wrong_event" %} 
+            <div class="text-5xl font-bold">Invalid</div>
+            <div class="text-sm uppercase mt-2">Ticket not for this event</div>
+        {% elif ticket_status == "not_stamped" %} 
+            <div class="text-5xl font-bold">Valid</div>
+        {% else %}
+            <div class="text-5xl font-bold">Stamped</div>
+            <div class="text-sm mt-2">By @emsknock</div>
+            <div class="text-sm">At 2021-09-09 12:34:00</div>
+        {% endif %}
+    </div>
+    {% if ticket.extra_info or ticket.user_id %}
+        <div class="pt-3 border-t text-xl text-center flex-grow">
+            {% if ticket.user_id %}
+                <div class="text-center font-bold">
+                    @{{ ticket.user_id }}
+                </div>
+            {% endif %}
+            {{ ticket.extra_info }}
+        </div>
+    {% else %}
+        <div class="flex-grow"></div>
+    {% endif %}
+    <div class="">
+        Unstamp
+    </div>
+</div>
+{% endblock %}
