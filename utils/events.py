@@ -11,7 +11,7 @@ def new_event(user_id, title, extra_info = None, date = None):
             "user_id": user_id,
             "title": title,
             "extra_info": extra_info,
-            "date": date,
+            "date": date if date else None,
         }
     )
     commit()
@@ -61,7 +61,7 @@ def update_event_data(event_id, title, date, extra_info):
         {
             "event_id": event_id,
             "title": title,
-            "date": date,
+            "date": date if date else None,
             "extra_info": extra_info
         }
     )
