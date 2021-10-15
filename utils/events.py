@@ -49,7 +49,7 @@ def get_event_info(event_id):
     )
     return result.fetchone()
 
-def update_event_data(event_id, title, date, extra_info):
+def update_event_data(event_id, title, extra_info = None, date = None):
     exec(
         """
         UPDATE events
@@ -61,8 +61,8 @@ def update_event_data(event_id, title, date, extra_info):
         {
             "event_id": event_id,
             "title": title,
+            "extra_info": extra_info,
             "date": date if date else None,
-            "extra_info": extra_info
         }
     )
     commit()
