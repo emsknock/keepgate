@@ -59,7 +59,7 @@ def signup():
         else:
             return "TODO — Username taken" # TODO: Username taken
 
-@app.route("/event/<id>", methods=["GET", "DELETE"])
+@app.route("/event/<id>", methods=["GET", "POST"])
 @users.requires_signin
 def event(id):
     if request.method == "GET":
@@ -68,7 +68,13 @@ def event(id):
             event=events.get_event_info(id)
         )
     else:
-        return "TODO — Event deletion" # TODO: Delete event
+        events.update_event_data(
+            id,
+            request.form["title"],
+            request.form["extra-info"],
+            request.form["date"]
+        )
+        return redirect("/")
 
 @app.route("/event", methods=["GET", "POST"])
 @users.requires_signin
