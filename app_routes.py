@@ -10,7 +10,7 @@ from flask import (
 
 @app.route("/")
 def index():
-    if users.is_signed_in(session):
+    if users.is_signed_in():
         return render_template(
             "index_logged_in.html",
             username=session["username"],
@@ -22,7 +22,7 @@ def index():
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
     if request.method == "GET":
-        if users.is_signed_in(session):
+        if users.is_signed_in():
             return redirect("/")
         else:
             return render_template("signin.html")
@@ -30,7 +30,7 @@ def signin():
         username = request.form["username"]
         password = request.form["password"]
         if users.check_signin(username, password):
-            users.signin(username, session)
+            users.signin(username)
             return redirect("/")
         else:
             flash("invalid_credentials")
@@ -38,7 +38,7 @@ def signin():
 
 @app.route("/signout")
 def signout():
-    users.signout(session)
+    users.signout()
     return redirect("/")
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -59,7 +59,7 @@ def signup():
         if not can_make_user:
             return redirect("/signup")
         users.new_user(username, new_password)
-        users.signin(username, session)
+        users.signin(username)
         return redirect("/")
 
 @app.route("/event/<id>", methods=["GET", "POST"])

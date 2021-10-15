@@ -52,18 +52,18 @@ def requires_signin(f):
             return redirect("/")
     return decorated_function
 
-def is_signed_in(session): return (
+def is_signed_in(): return (
     "username" in session and
     "user_id" in session and
     session["username"] != "" and
     session["user_id"] != ""
 )
 
-def signin(username, session):
+def signin(username):
     session["username"] = username
     session["user_id"] = get_id_by_username("username")
 
-def signout(session):
+def signout():
     if "username" in session:
         del session["username"]
     if "user_id" in session:
