@@ -11,6 +11,13 @@
             <a href="/signup" class="cursor-pointer text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">Sign up</a>
         </div>
         <form action="/signin" method="post" class="flex flex-col space-y-4 py-2 border-t">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="bg-red-400 text-white p-4 rounded">
+                        Wrong username and/or password
+                    </div>
+                {% endif %}
+            {% endwith %}
             <label for="username">
                 <div class="text-sm uppercase mb-1 opacity-60">Username</div>
                 <input type="text" id="username" name="username" class="px-3 py-2 w-full border border-gray-200 rounded" />

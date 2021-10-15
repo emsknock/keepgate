@@ -4,7 +4,8 @@ from flask import (
     render_template,
     redirect,
     request,
-    session
+    session,
+    flash
 )
 
 @app.route("/")
@@ -33,7 +34,8 @@ def signin():
             session["user_id"] = users.get_id_by_username(username)
             return redirect("/")
         else:
-            return "TODO — Wrong username or password" # TODO: Wrong username or password
+            flash("invalid_credentials")
+            return redirect("/signin")
 
 @app.route("/signout")
 def signout():
