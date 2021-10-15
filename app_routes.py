@@ -30,8 +30,7 @@ def signin():
         username = request.form["username"]
         password = request.form["password"]
         if users.check_signin(username, password):
-            session["username"] = username
-            session["user_id"] = users.get_id_by_username(username)
+            users.signin(username, session)
             return redirect("/")
         else:
             flash("invalid_credentials")
@@ -39,8 +38,7 @@ def signin():
 
 @app.route("/signout")
 def signout():
-    if users.is_signed_in(session):
-        del session["username"]
+    users.signout(session)
     return redirect("/")
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -61,8 +59,7 @@ def signup():
         if not can_make_user:
             return redirect("/signup")
         users.new_user(username, new_password)
-        session["username"] = username
-        session["user_id"] = users.get_id_by_username(username)
+        users.signin(username, session)
         return redirect("/")
 
 @app.route("/event/<id>", methods=["GET", "POST"])

@@ -58,3 +58,13 @@ def is_username_free(username):
     )
     user = result.fetchone()
     return not user
+
+def signin(username, session):
+    session["username"] = username
+    session["user_id"] = get_id_by_username("username")
+
+def signout(session):
+    if "username" in session:
+        del session["username"]
+    if "user_id" in session:
+        del session["user_id"]
