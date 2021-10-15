@@ -18,6 +18,19 @@ def new_ticket(event_id, user_id = None, extra_info = None):
     commit()
     return id.fetchone()[0]
 
+def get_ticket(id):
+    result = exec(
+        """
+        SELECT id, event_id, user_id, extra_info, stamped, stamped_at, stamped_by
+        FROM tickets
+        WHERE id = :id
+        """,
+        {
+            "id": id
+        }
+    )
+    return result.fetchone()
+
 def stamp_ticket(id, user_id):
     exec(
         """
