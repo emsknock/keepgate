@@ -24,6 +24,11 @@
                 <textarea id="extra-info" name="extra-info" rows="4" class="px-3 py-2 w-full border border-gray-200 rounded">{{ event.extra_info }}</textarea>
             </label>
         </form>
+        <div class="flex flex-col space-y-2">
+            <a href="/event/{{ event.id }}/tickets" class="text-center cursor-pointer text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">Tickets ({{ event.ticket_count }})</a>
+            <a href="/event/{{ event.id }}/passes" class="text-center cursor-pointer text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">Passes ({{ event.pass_count }})</a>
+            <a href="/event/{{ event.id }}/organisers" class="text-center cursor-pointer text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">Organisers ({{ event.organiser_count }})</a>
+        </div>
     </div>
 </div>
 {% endblock %}
