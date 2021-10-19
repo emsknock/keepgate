@@ -62,7 +62,7 @@ def is_signed_in(): return (
 
 def signin(username):
     session["username"] = username
-    session["user_id"] = get_id_by_username("username")
+    session["user_id"] = get_id_by_username(username)
     session["csrf_token"] = token_hex(16)
 
 def signout():
