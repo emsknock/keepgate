@@ -1,4 +1,4 @@
-from utils import events, users
+from utils import events, users, tickets
 from app import app
 from flask import (
     render_template,
@@ -8,21 +8,26 @@ from flask import (
     flash
 )
 
-@app.route("/event/<id>/tickets")
+@app.route("/event/<id>/tickets", methods=["GET", "POST"])
 @users.requires_signin
-def tickets(id):
+def event_tickets(id):
     if not events.does_user_own_event(session["user_id"], id):
         flash("not_own_event")
         return redirect("/")
-    return render_template(
-        "event_tickets.html",
-        event=events.get_event_info(id),
-        tickets=events.get_ticket_list(id)
-    )
+    if request.method == "GET":
+        return render_template(
+            "event_tickets.html",
+            event=events.get_event_info(id),
+            tickets=events.get_ticket_list(id)
+        )
+    else:
+        print(request.form)
+        tickets.new_tickets(id, int(request.form["new-ticket-count"]))
+        return redirect("./tickets")
 
 @app.route("/event/<id>/passes")
 @users.requires_signin
-def passes(id):
+def event_passes(id):
     if not events.does_user_own_event(session["user_id"], id):
         flash("not_own_event")
         return redirect("/")
@@ -34,7 +39,7 @@ def passes(id):
 
 @app.route("/event/<id>/organisers")
 @users.requires_signin
-def organisers(id):
+def event_organisers(id):
     if not events.does_user_own_event(session["user_id"], id):
         flash("not_own_event")
         return redirect("/")

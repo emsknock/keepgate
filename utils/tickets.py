@@ -1,22 +1,20 @@
 from db import exec, commit
 from uuid import uuid4
 
-def new_ticket(event_id, user_id = None, extra_info = None):
-    id = exec(
-        """
-        INSERT INTO tickets (id, event_id, user_id, extra_info)
-        VALUES (:id, :event_id, :user_id, :extra_info)
-        RETURNING id
-        """,
-        {
-            "id": uuid4(),
-            "event_id": event_id,
-            "user_id": user_id,
-            "extra_info": extra_info,
-        }
-    )
+def new_tickets(event_id, count):
+    for _ in range(0, count):
+        exec(
+            """
+            INSERT INTO tickets (id, event_id)
+            VALUES (:id, :event_id)
+            RETURNING id
+            """,
+            {
+                "id": uuid4(),
+                "event_id": event_id
+            }
+        )
     commit()
-    return id.fetchone()[0]
 
 def get_ticket(id):
     result = exec(
