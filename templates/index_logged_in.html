@@ -26,7 +26,7 @@
         <ul class="my-2 flex flex-col space-y-2">
             {% for id, title, date, extra_info, ticket_count, pass_count, organiser_count in own_events %}
                 <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
-                    <a href="/event/{{ id }}" class="text-blue-800 font-bold capitalize flex-grow">{{ title }}</a>
+                    <a href="/event/{{ id }}/tickets" class="text-blue-800 font-bold capitalize flex-grow">{{ title }}</a>
                     <span class="text-sm uppercase opacity-60">
                         {% if ticket_count == 1 %} 1 ticket {% else %} {{ ticket_count }} tickets {% endif %}
                     </span>

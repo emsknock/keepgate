@@ -44,17 +44,12 @@ def organisers(id):
         organisers=events.get_organiser_list(id)
     )
 
-@app.route("/event/<id>", methods=["GET", "POST"])
+@app.route("/event/<id>", methods=["POST"])
 @users.requires_signin
 def event(id):
     if not events.does_user_own_event(session["user_id"], id):
         flash("not_own_event")
         return redirect("/")
-    if request.method == "GET":
-        return render_template(
-            "event.html",
-            event=events.get_event_info(id)
-        )
     else:
         events.update_event_data(
             id,
