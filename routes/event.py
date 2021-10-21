@@ -71,4 +71,4 @@ def new_event():
             request.form["extra-info"],
             request.form["date"]
         )
-        return redirect(f"/event/{event_id}")
+        return redirect(f"/event/{event_id}/tickets")
