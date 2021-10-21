@@ -33,14 +33,14 @@
             </details>
             <nav class="border-t pt-4 flex flex-col space-y-3">
                 <a href="/event/{{ event.id }}/tickets" class="flex items-center space-x-2 text-blue-800">
-                    <span>Tickets</span>
+                    <span>Tickets ({{ event.ticket_count }})</span>
                 </a>
                 <a href="/event/{{ event.id }}/passes" class="flex items-center space-x-2 text-blue-800">
-                    <span>Passes</span>
+                    <span>Passes ({{ event.pass_count }})</span>
                 </a>
                 <a href="/event/{{ event.id }}/organisers" class="flex items-center space-x-2 text-gray-600">
                     <i class="fas fa-circle fa-xs"></i>
-                    <span>Organisers</span>
+                    <span>Organisers ({{ event.organiser_count }})</span>
                 </a>
             </nav>
         </form>
