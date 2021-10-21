@@ -67,6 +67,15 @@ def update_event_data(event_id, title, extra_info = None, date = None):
     )
     commit()
 
+def get_ticket_list(event_id):
+    result = exec(
+        "SELECT id FROM tickets WHERE event_id=:event_id",
+        {
+            "event_id": event_id
+        }
+    )
+    return result.fetchall()
+
 def does_user_own_event(user_id, event_id):
     try:
         return get_event_info(event_id).user_id == user_id
