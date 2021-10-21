@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}{{ event.title }} • Tickets{% endblock %}
+{% block content %}
+<div class="w-screen h-screen flex">
+    <div class="h-full w-96 p-4 flex flex-col space-y-3">
+        <form action="/event/{{ event.id }}" method="post" class="flex flex-col space-y-3">
+            <div class="flex justify-between">
+                <a href="/" class="flex items-center space-x-2 text-blue-800">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </a>
+                <input type="submit" class="cursor-pointer text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 rounded-full" value="Save"></input>
+            </div>
+            <input type="text" id="title" name="title" placeholder="Event title" class="text-xl px-2 py-1 flex-grow border border-gray-200 rounded" value="{{ event.title }}" />
+            <details>
+                <summary class="cursor-pointer">Details</summary>
+                <div class="flex flex-col space-y-3 pt-3">
+                    <label for="date">
+                        <div class="text-sm uppercase mb-1 flex justify-between">
+                            <span class="opacity-60">Date (optional)</span>
+                            <button type="button" onclick="document.getElementById('date').value = ''" class="text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 rounded-full">Clear</button>
+                        </div>
+                        <input type="date" id="date" name="date" class="px-3 py-2 w-full border border-gray-200 rounded" value="{{ event.date.strftime("%Y-%m-%d") if event.date else "" }}" />
+                    </label>
+                    <label for="extra-info">
+                        <div class="text-sm uppercase mb-1 flex justify-between">
+                            <span class="opacity-60">Extra info (optional)</span>
+                            <button type="button" onclick="document.getElementById('description').value = ''" class="text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 rounded-full">Clear</button>
+                        </div>
+                        <textarea id="extra-info" name="extra-info" rows="4" class="px-3 py-2 w-full border border-gray-200 rounded">{{ event.extra_info }}</textarea>
+                    </label>
+                </div>
+            </details>
+            <nav class="border-t pt-4 flex flex-col space-y-3">
+                <a href="/event/{{ event.id }}/tickets" class="flex items-center space-x-2 text-blue-800">
+                    <span>Tickets</span>
+                </a>
+                <a href="/event/{{ event.id }}/passes" class="flex items-center space-x-2 text-blue-800">
+                    <span>Passes</span>
+                </a>
+                <a href="/event/{{ event.id }}/organisers" class="flex items-center space-x-2 text-gray-600">
+                    <i class="fas fa-circle fa-xs"></i>
+                    <span>Organisers</span>
+                </a>
+            </nav>
+        </form>
+    </div>
+    <div class="h-full flex-grow flex flex-col items-center overflow-x-scroll">
+
+        <form action="/event/{{ event.id }}/new-organiser">
+            <label for="new-organiser-username">
+                <span>New organiser:</span>
+                <input type="text" id="new-organiser-username"></input>
+            </label>
+            <button type="submit" class="">
+                Add
+            </button>
+        </form>
+        <ul>
+            {% for pass in passes %}
+                <li>{{ pass.id }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>
+{% endblock %}
