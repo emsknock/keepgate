@@ -28,15 +28,6 @@
                 <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
                     <a href="/event/{{ id }}/tickets" class="text-blue-800 font-bold capitalize flex-grow">{{ title }}</a>
                     <span class="text-sm uppercase opacity-60">
-                        {% if ticket_count == 1 %} 1 ticket {% else %} {{ ticket_count }} tickets {% endif %}
-                    </span>
-                    <span class="text-sm uppercase opacity-60">
-                        {% if pass_count == 1 %} 1 passes {% else %} {{ pass_count }} passes {% endif %}
-                    </span>
-                    <span class="text-sm uppercase opacity-60">
-                        {% if organiser_count == 1 %} 1 organiser {% else %} {{ organiser_count }} organisers {% endif %}
-                    </span>
-                    <span class="text-sm uppercase opacity-60">
                         {% if date %} {{ date.strftime("%Y-%m-%d") }} {% else %} No date {% endif %}
                     </span>
                 </li>
