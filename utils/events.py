@@ -69,7 +69,31 @@ def update_event_data(event_id, title, extra_info = None, date = None):
 
 def get_ticket_list(event_id):
     result = exec(
-        "SELECT id FROM tickets WHERE event_id=:event_id",
+        "SELECT id, user_id, extra_info, stamped, stamped_at, stamped_by FROM tickets WHERE event_id=:event_id",
+        {
+            "event_id": event_id
+        }
+    )
+    return result.fetchall()
+
+def get_pass_list(event_id):
+    result = exec(
+        "SELECT id, user_id, extra_info, value FROM passes WHERE event_id=:event_id",
+        {
+            "event_id": event_id
+        }
+    )
+    return result.fetchall()
+
+def get_organiser_list(event_id):
+    result = exec(
+        """
+        SELECT username, can_create, can_remove, can_stamp, can_unstamp, can_topup, can_deduct
+        FROM organisers o
+            LEFT JOIN users u
+            ON o.user_id = u.id
+        WHERE event_id=:event_id
+        """,
         {
             "event_id": event_id
         }
