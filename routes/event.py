@@ -62,7 +62,7 @@ def event(id):
             request.form["extra-info"],
             request.form["date"]
         )
-        return redirect(f"/event/{id}")
+        return redirect(f"/event/{id}/tickets")
 
 @app.route("/event", methods=["GET", "POST"])
 @users.requires_signin
@@ -70,10 +70,10 @@ def new_event():
     if request.method == "GET":
         return render_template("event_new.html")
     else:
-        event_id = events.new_event(
+        id = events.new_event(
             session["user_id"],
             request.form["title"],
             request.form["extra-info"],
             request.form["date"]
         )
-        return redirect(f"/event/{event_id}/tickets")
+        return redirect(f"/event/{id}/tickets")
