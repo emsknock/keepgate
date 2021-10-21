@@ -63,7 +63,7 @@ def event(id):
 @users.requires_signin
 def new_event():
     if request.method == "GET":
-        return render_template("new_event.html")
+        return render_template("event_new.html")
     else:
         event_id = events.new_event(
             session["user_id"],
