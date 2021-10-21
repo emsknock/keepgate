@@ -62,8 +62,8 @@
                         <summary class="flex space-x-4 items-center cursor-pointer">
                             <span class="font-mono text-blue-800 font-bold uppercase">{{ ticket.id }}</span>
                             <span class="flex-grow w-20"></span>
-                            <i class="fas fa-certificate"></i>
-                            <i class="fas fa-lock"></i>
+                            {% if ticket.user_id %} <i class="w-4 fas fa-lock"></i> {% else %} <span class="w-4"></span> {% endif %}
+                            {% if ticket.stamped %} <i class="w-4 fas fa-certificate"></i> {% else %} <span class="w-4"></span> {% endif %}
                         </summary>
                         <div class="mt-2 flex flex-col space-y-2">
                             <div class="flex items-center space-x-2">
