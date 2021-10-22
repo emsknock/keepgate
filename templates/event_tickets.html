@@ -4,6 +4,7 @@
 <div class="w-screen h-screen flex">
     <div class="h-full w-96 p-4 flex flex-col space-y-3">
         <form action="/event/{{ event.id }}" method="post" class="flex flex-col space-y-3">
+            <input type="hidden" name="csrf" value="{{ session.csrf_token }}"></input>
             <div class="flex justify-between">
                 <a href="/" class="flex items-center space-x-2 text-blue-800">
                     <i class="fas fa-arrow-left"></i>
@@ -47,6 +48,7 @@
     </div>
     <div class="h-full flex-grow flex flex-col items-center overflow-x-scroll">
         <form action="/event/{{ event.id }}/tickets" method="post" class="my-8 text-lg">
+            <input type="hidden" name="csrf" value="{{ session.csrf_token }}"></input>
             <label for="new-ticket-count" class="space-x-4 ">
                 <span>New tickets:</span>
                 <input type="number" id="new-ticket-count" name="new-ticket-count" value="1" min="1" max="100" class="ml-2 px-2 py-1 border border-gray-200 rounded"></input>
@@ -76,6 +78,7 @@
                                 {% endif %}
                             </div>
                             <form action="/ticket/{{ ticket.id }}" method="post">
+                                <input type="hidden" name="csrf" value="{{ session.csrf_token }}"></input>
                                 <textarea id="extra-info" name="extra-info" placeholder="Extra info for ticket" rows="4" class="px-3 py-2 w-full border border-gray-200 rounded">{{ ticket.extra_info if ticket.extra_info else "" }}</textarea>
                                 <div class="flex space-x-2">
                                     <button type="submit" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">

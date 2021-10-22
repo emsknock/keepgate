@@ -10,6 +10,7 @@ from flask import (
 
 @app.route("/event/<id>/tickets", methods=["GET", "POST"])
 @users.requires_signin
+@users.checks_csrf
 def event_tickets(id):
     if not events.does_user_own_event(session["user_id"], id):
         flash("not_own_event")
@@ -21,12 +22,12 @@ def event_tickets(id):
             tickets=events.get_ticket_list(id)
         )
     else:
-        print(request.form)
         tickets.new_tickets(id, int(request.form["new-ticket-count"]))
         return redirect("./tickets")
 
 @app.route("/event/<id>/passes", methods=["GET", "POST"])
 @users.requires_signin
+@users.checks_csrf
 def event_passes(id):
     if not events.does_user_own_event(session["user_id"], id):
         flash("not_own_event")
@@ -55,6 +56,7 @@ def event_organisers(id):
 
 @app.route("/event/<id>", methods=["POST"])
 @users.requires_signin
+@users.checks_csrf
 def event(id):
     if not events.does_user_own_event(session["user_id"], id):
         flash("not_own_event")
@@ -70,6 +72,7 @@ def event(id):
 
 @app.route("/event", methods=["GET", "POST"])
 @users.requires_signin
+@users.checks_csrf
 def new_event():
     if request.method == "GET":
         return render_template("event_new.html")

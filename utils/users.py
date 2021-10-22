@@ -2,7 +2,7 @@ from db import exec, commit
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from functools import wraps
-from flask import redirect, session
+from flask import redirect, request, session, abort
 from secrets import token_hex
 
 def new_user(username, password):
@@ -53,6 +53,16 @@ def requires_signin(f):
             return redirect("/")
     return decorated_function
 
+def checks_csrf(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if request.method != "POST" or request.form["csrf"] == session["csrf_token"]:
+            return f(*args, **kwargs)
+        else:
+            return abort(403)
+    return decorated_function
+
+
 def is_signed_in(): return (
     "username" in session and
     "user_id" in session and
@@ -70,6 +80,3 @@ def signout():
         del session["username"]
     if "user_id" in session:
         del session["user_id"]
-
-def check_csrf(request):
-    return request.form and request.form["csrf"] == session["csrf_token"]
