@@ -69,7 +69,17 @@ def update_event_data(event_id, title, extra_info = None, date = None):
 
 def get_ticket_list(event_id):
     result = exec(
-        "SELECT id, user_id, extra_info, stamped, stamped_at, stamped_by FROM tickets WHERE event_id=:event_id",
+        """
+        SELECT id,
+               user_id,
+               extra_info,
+               stamped,
+               stamped_at,
+               stamped_by,
+               (SELECT username FROM users WHERE id = stamped_by) AS stamped_by_username
+        FROM tickets
+        WHERE event_id=:event_id
+        """,
         {
             "event_id": event_id
         }
