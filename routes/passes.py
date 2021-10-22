@@ -48,7 +48,7 @@ def pass_management(id):
 @app.route("/pass/<id>/value", methods=["GET", "POST"])
 @users.requires_signin
 @users.checks_csrf
-def pass_valuemod(id):
+def pass_value(id):
     
     valuepass = passes.get_pass(id)
     if not valuepass:
