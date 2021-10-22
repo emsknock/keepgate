@@ -13,7 +13,7 @@ def signin():
         if users.is_signed_in():
             return redirect("/")
         else:
-            return render_template("signin.html")
+            return render_template("sign_in.html")
     else:
         username = request.form["username"]
         password = request.form["password"]
@@ -32,7 +32,7 @@ def signout():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "GET":
-        return render_template("signup.html")
+        return render_template("sign_up.html")
     else:
         username = request.form["username"]
         new_password = request.form["new-password"]
