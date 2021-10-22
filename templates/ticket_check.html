@@ -34,8 +34,8 @@
             <div class="text-5xl font-bold">Valid</div>
         {% else %}
             <div class="text-5xl font-bold">Stamped</div>
-            <div class="text-sm mt-2">By @emsknock</div>
-            <div class="text-sm">At 2021-09-09 12:34:00</div>
+            <div class="text-sm mt-2">By @{{ ticket.stamped_by_username }}</div>
+            <div class="text-sm">At {{ ticket.stamped_at.strftime("%Y-%m-%d %H:%M:%S") }}</div>
         {% endif %}
     </div>
     {% if ticket.extra_info or ticket.user_id %}
