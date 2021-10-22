@@ -61,5 +61,5 @@ def pass_value(id):
         if not events.does_user_own_event(session["user_id"], event.id):
             flash("not_own_event")
             return redirect("/") # TODO Check for organiser, not owner
-        return str(passes.pass_modify_value(id, int(request.form["value-delta"])))
+        return str(passes.pass_modify_value(id, int(request.form["value-delta"]), session["user_id"]))
 

@@ -46,9 +46,12 @@ def update_pass_data(pass_id, extra_info = None):
     )
     commit()
 
-def pass_modify_value(pass_id, value):
+def pass_modify_value(pass_id, value, user_id):
     new_value = exec(
         """
+        INSERT INTO pass_transactions (pass_id, user_id, value, time)
+        VALUES (:pass_id, :user_id, :value, CURRENT_TIMESTAMP)
+        ;
         UPDATE passes
         SET value = value + :value
         WHERE id = :pass_id
@@ -56,6 +59,7 @@ def pass_modify_value(pass_id, value):
         """,
         {
             "pass_id": pass_id,
+            "user_id": user_id,
             "value": value
         }
     )
