@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ event.title }} • valuepass{% endblock %}
+{% block content %}
+<div class="w-screen h-screen p-4 space-y-3 flex flex-col">
+    <div class="text-center text-xs font-mono opacity-40">{{ valuepass.id }}</div>
+    <div class="flex flex-col justify-center items-center space-y-2">
+        <h1 class="font-bold text-xl">{{ event.title }}</h1>
+        <p>
+            {% if event.date %} {{ event.date.strftime("%Y-%m-%d") }} {% endif %}
+        </p>
+        <p>
+            {% if event.extra_info %} {{ event.extra_info }} {% endif %}
+        </p>
+    </div>
+    <div class="flex items-center justify-center">
+        <img src="https://quickchart.io/qr?text=https%3A%2F%2Ftsoha-keepgate.herokuapp.com%2Fpass%2F{{ valuepass.id }}%2Fmanage&margin=0&ecLevel=L&size=200&format=svg" alt="qr code"></img>
+    </div>
+    <div class="flex justify-center">
+        <span class="text-6xl font-bold">{{ valuepass.value }}</span>
+    </div>
+    {% if valuepass.extra_info or valuepass.user_id %}
+        <div class="pt-3 border-t text-xl text-center flex-grow">
+            {% if valuepass.user_id %}
+                <div class="text-center font-bold">
+                    @{{ valuepass.user_id }}
+                </div>
+            {% endif %}
+            {{ valuepass.extra_info }}
+        </div>
+    {% else %}
+        <div class="flex-grow"></div>
+    {% endif %}
+    <div class="">
+        Unstamp
+    </div>
+</div>
+{% endblock %}
