@@ -14,3 +14,20 @@ def new_passes(event_id, count):
             }
         )
     commit()
+
+def get_pass(id):
+    result = exec(
+        """
+        SELECT id,
+               event_id,
+               user_id,
+               extra_info,
+               value
+        FROM passes
+        WHERE id = :id
+        """,
+        {
+            "id": id
+        }
+    )
+    return result.fetchone()
