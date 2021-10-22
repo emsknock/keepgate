@@ -12,8 +12,11 @@
 {% endif %}
 <div class="w-screen h-screen p-4 space-y-3 flex flex-col">
     <div class="text-center text-xs font-mono opacity-40">{{ ticket.id }}</div>
-    <div class="flex flex-col space-y-2">
-        <h1 class="font-bold text-xl text-center">{{ event.title }}</h1>
+    <div class="flex flex-col justify-center items-center space-y-2">
+        <h1 class="font-bold text-xl">{{ event.title }}</h1>
+        <p>
+            {% if event.date %} {{ event.date.strftime("%Y-%m-%d") }} {% endif %}
+        </p>
         <p>
             {% if event.extra_info %} {{ event.extra_info }} {% endif %}
         </p>
