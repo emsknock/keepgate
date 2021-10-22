@@ -7,7 +7,6 @@ def new_tickets(event_id, count):
             """
             INSERT INTO tickets (id, event_id)
             VALUES (:id, :event_id)
-            RETURNING id
             """,
             {
                 "id": uuid4(),
