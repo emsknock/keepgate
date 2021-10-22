@@ -40,7 +40,7 @@ def update_pass_data(pass_id, extra_info = None):
         WHERE id = :pass_id
         """,
         {
-            "ticket_id": pass_id,
+            "pass_id": pass_id,
             "extra_info": extra_info
         }
     )
