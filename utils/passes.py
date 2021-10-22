@@ -31,3 +31,17 @@ def get_pass(id):
         }
     )
     return result.fetchone()
+
+def update_pass_data(pass_id, extra_info = None):
+    exec(
+        """
+        UPDATE passes
+        SET extra_info = :extra_info
+        WHERE id = :pass_id
+        """,
+        {
+            "ticket_id": pass_id,
+            "extra_info": extra_info
+        }
+    )
+    commit()
