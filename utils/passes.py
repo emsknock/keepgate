@@ -45,3 +45,16 @@ def update_pass_data(pass_id, extra_info = None):
         }
     )
     commit()
+
+def pass_modify_value(pass_id, value):
+    exec(
+        """
+        UPDATE passes
+        SET value = value + :value
+        WHERE id = :pass_id
+        """,
+        {
+            "pass_id": pass_id
+        }
+    )
+    commit()
