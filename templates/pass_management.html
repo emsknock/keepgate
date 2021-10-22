@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ event.title }} • Pass{% endblock %}
+{% block content %}
+<div class="w-screen h-screen p-4 space-y-3 flex flex-col">
+    <div class="text-center text-xs font-mono opacity-40">{{ valuepass.id }}</div>
+    <div id="current-value" class="text-center text-6xl font-bold">{{ valuepass.value }}</div>
+    {% if valuepass.extra_info %}
+        <div class="flex justify-center items-center">
+            <span>{{ valuepass.extra_info }}</span>
+        </div>
+    {% endif %}
+    <form class="border-t pt-3 flex flex-col ">
+        <input type="number" id="value-delta" name="value-delta" min="1" max="10000"></input>
+        <button type="button" onClick="post(valueDelta.value)">Add</button>
+        <button type="button" onClick="post(-valueDelta.value)">Deduct</button>
+    </form>
+</div>
+<script>
+var currentValue = document.getElementById("current-value");
+var valueDelta = document.getElementById("value-delta");
+function post(value) {
+    fetch("/pass/{{ valuepass.id }}/value", {
+        method: "POST",
+        body: new URLSearchParams({
+            "value-delta": value,
+            "csrf": "{{ session.csrf_token }}"
+        })
+    })
+    .then(function (res) { return res.text() })
+    .then(function (val) { currentValue.textContent = val; });
+}
+</script>
+{% endblock %}

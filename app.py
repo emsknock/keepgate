@@ -8,7 +8,8 @@ from routes import (
     index,
     auth,
     event,
-    ticket
+    ticket,
+    passes
 )
 
 if __name__ == "__main__":
