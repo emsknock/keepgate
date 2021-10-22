@@ -39,6 +39,7 @@ def ticket_check(id):
     event = events.get_event_info(ticket.event_id)
     if not ticket:
         return abort(404)
+    tickets.stamp_ticket(id, session["user_id"])
     return render_template(
         "ticket_check.html",
         ticket=ticket,
