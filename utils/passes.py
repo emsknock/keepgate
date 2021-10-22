@@ -7,7 +7,6 @@ def new_passes(event_id, count):
             """
             INSERT INTO passes (id, event_id)
             VALUES (:id, :event_id)
-            RETURNING id
             """,
             {
                 "id": uuid4(),
