@@ -58,3 +58,17 @@ def unstamp_ticket(id):
         }
     )
     commit()
+
+def update_ticket_data(ticket_id, extra_info = None):
+    exec(
+        """
+        UPDATE tickets
+        SET extra_info = :extra_info
+        WHERE id = :ticket_id
+        """,
+        {
+            "ticket_id": ticket_id,
+            "extra_info": extra_info
+        }
+    )
+    commit()
