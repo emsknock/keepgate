@@ -65,3 +65,21 @@ def pass_modify_value(pass_id, value, user_id):
     )
     commit()
     return new_value.fetchone()[0]
+
+def get_pass_transactions(pass_id):
+    result = exec(
+        """
+        SELECT t.value,
+               t.time,
+               u.username
+        FROM pass_transactions t
+            LEFT JOIN users u
+            ON t.user_id = u.id
+        WHERE t.pass_id = :pass_id
+        """,
+        {
+            "pass_id": pass_id
+        }
+    )
+    commit()
+    return result.fetchall();

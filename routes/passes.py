@@ -32,6 +32,20 @@ def valuepass(id):
         )
         return redirect(f"/event/{event.id}/tickets")
 
+@app.route("/pass/<id>/transactions")
+@users.requires_signin
+def pass_transactions(id):
+    valuepass = passes.get_pass(id)
+    event = events.get_event_info(valuepass.event_id)
+    if not events.does_user_own_event(session["user_id"], event.id):
+        flash("not_own_event")
+        redirect("/")
+    return render_template(
+        "pass_transactions.html",
+        valuepass=valuepass,
+        transactions=passes.get_pass_transactions(id)
+    )
+
 @app.route("/pass/<id>/manage")
 @users.requires_signin
 def pass_management(id):
