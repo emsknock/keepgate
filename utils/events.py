@@ -88,7 +88,14 @@ def get_ticket_list(event_id):
 
 def get_pass_list(event_id):
     result = exec(
-        "SELECT id, user_id, extra_info, value FROM passes WHERE event_id=:event_id",
+        """
+        SELECT id,
+               user_id,
+               extra_info,
+               value
+        FROM passes
+        WHERE event_id=:event_id
+        """,
         {
             "event_id": event_id
         }
