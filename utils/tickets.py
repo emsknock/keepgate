@@ -18,7 +18,14 @@ def new_tickets(event_id, count):
 def get_ticket(id):
     result = exec(
         """
-        SELECT id, event_id, user_id, extra_info, stamped, stamped_at, stamped_by
+        SELECT id,
+               event_id,
+               user_id,
+               extra_info,
+               stamped,
+               stamped_at,
+               stamped_by,
+               (SELECT username FROM users WHERE id = stamped_by) AS stamped_by_username
         FROM tickets
         WHERE id = :id
         """,
