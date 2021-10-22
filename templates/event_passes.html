@@ -46,10 +46,10 @@
         </form>
     </div>
     <div class="h-full flex-grow flex flex-col items-center overflow-x-scroll">
-        <form action="/event/{{ event.id }}/new-tickets" method="post" class="my-8 text-lg">
-            <label for="new-ticket-count" class="space-x-4 ">
+        <form action="/event/{{ event.id }}/passes" method="post" class="my-8 text-lg">
+            <label for="new-pass-count" class="space-x-4 ">
                 <span>New passes:</span>
-                <input type="number" id="new-ticket-count" value="1" min="1" max="100" class="ml-2 px-2 py-1 border border-gray-200 rounded"></input>
+                <input type="number" id="new-pass-count" name="new-pass-count" value="1" min="1" max="100" class="ml-2 px-2 py-1 border border-gray-200 rounded"></input>
             </label>
             <button type="submit" class="ml-4 cursor-pointer text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">
                 Create
