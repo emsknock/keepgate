@@ -105,7 +105,10 @@ def get_pass_list(event_id):
 def get_organiser_list(event_id):
     result = exec(
         """
-        SELECT username, can_create, can_remove, can_stamp, can_unstamp, can_topup, can_deduct
+        SELECT username,
+               can_create, can_remove,
+               can_stamp, can_unstamp,
+               can_topup, can_deduct
         FROM organisers o
             LEFT JOIN users u
             ON o.user_id = u.id
