@@ -19,7 +19,8 @@ CREATE TABLE tickets (
     extra_info  TEXT, -- Extra info shown only for specific ticket
     stamped     BOOLEAN NOT NULL DEFAULT FALSE, -- Set true on first scan
     stamped_at  TIMESTAMP WITH TIME ZONE,
-    stamped_by  INTEGER REFERENCES users
+    stamped_by  INTEGER REFERENCES users,
+    created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE passes (
@@ -27,7 +28,8 @@ CREATE TABLE passes (
     event_id    INTEGER REFERENCES events NOT NULL,
     user_id     INTEGER REFERENCES users, -- Only set if requires login to display
     value       INTEGER DEFAULT 0,
-    extra_info  TEXT
+    extra_info  TEXT,
+    created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE organisers (
