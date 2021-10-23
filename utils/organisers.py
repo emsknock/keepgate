@@ -72,4 +72,4 @@ def get_permissions(event_id):
             "can_stamp": True,   "can_unstamp": True,
             "can_topup": True,   "can_deduct": True
         }
-    return get_permissions(event_id, session["user_id"])
+    return get_organiser(event_id, session["user_id"])
