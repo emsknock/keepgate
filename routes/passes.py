@@ -1,4 +1,4 @@
-from flask.helpers import url_for
+from flask.helpers import flash, url_for
 from utils import tickets, events, users, passes
 from app import app
 from flask import (
@@ -24,6 +24,9 @@ def valuepass(pass_id):
         )
     else:
         if not events.assert_user_owns_event(event.id): return
+        if len(request.form["extra-info"]) > 512:
+            flash("too_long_info")
+            redirect("event_passes")
         passes.update_pass_data(
             pass_id,
             request.form["extra-info"]
