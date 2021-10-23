@@ -9,7 +9,8 @@ from routes import (
     auth,
     event,
     ticket,
-    passes
+    passes,
+    organisers
 )
 
 if __name__ == "__main__":

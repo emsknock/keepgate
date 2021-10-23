@@ -85,21 +85,60 @@
                 {% endif %}
             {% endwith %}
         </form>
-        <ul>
+        <ul class="w-full flex flex-col items-center space-y-2 px-16">
             {% for organiser in organisers %}
-                <li>
+                <li class="w-full">
                     <details class="bg-gray-50 px-3 py-2 rounded">
                         <summary class="flex space-x-4 items-center cursor-pointer">
-                            <span class="font-mono text-blue-800 font-bold uppercase">{{ organiser.username }}</span>
+                            <span class="text-blue-800 font-bold">{{ organiser.username }}</span>
                             <span class="flex-grow w-20"></span>
                             {#
                             {% if ticket.user_id %} <i class="w-4 fas fa-lock"></i> {% else %} <span class="w-4"></span> {% endif %}
                             {% if ticket.stamped %} <i class="w-4 fas fa-certificate"></i> {% else %} <span class="w-4"></span> {% endif %}
                             #}
                         </summary>
-                        <div class="mt-2 flex flex-col space-y-2">
-                            
-                        </div>
+                        <form action="/organiser/{{ event.id }}/{{ organiser.id }}" method="post" class="mt-2 flex flex-col items-center space-y-4">
+                            <input type="hidden" name="csrf" value="{{ session.csrf_token }}"></input>
+                            <div class="grid grid-cols-3 grid-rows-2 gap-x-6 gap-y-1">
+                                <div class="col-span-3 opacity-60">
+                                    Permissions:
+                                </div>
+                                <label for="can-create" class="flex items-center space-x-2">
+                                    <input id="can-create" name="can-create" type="checkbox" {% if organiser.can_create %} checked {% endif %}></input>
+                                    <span>Create tickets and passes</span>
+                                </label>
+                                <label for="can-delete" class="flex items-center space-x-2">
+                                    <input id="can-delete" name="can-delete" type="checkbox" {% if organiser.can_delete %} checked {% endif %}></input>
+                                    <span>Delete tickets and passes</span>
+                                </label>
+                                <label for="can-stamp" class="flex items-center space-x-2">
+                                    <input id="can-stamp" name="can-stamp" type="checkbox" {% if organiser.can_stamp %} checked {% endif %}></input>
+                                    <span>Stamp tickets</span>
+                                </label>
+                                <label for="can-unstamp" class="flex items-center space-x-2">
+                                    <input id="can-unstamp" name="can-unstamp" type="checkbox" {% if organiser.can_unstamp %} checked {% endif %}></input>
+                                    <span>Unstamp tickets</span>
+                                </label>
+                                <label for="can-topup" class="flex items-center space-x-2">
+                                    <input id="can-topup" name="can-topup" type="checkbox" {% if organiser.can_topup %} checked {% endif %}></input>
+                                    <span>Add value to passes</span>
+                                </label>
+                                <label for="can-deduct" class="flex items-center space-x-2">
+                                    <input id="can-deduct" name="can-deduct" type="checkbox" {% if organiser.can_deduct %} checked {% endif %}></input>
+                                    <span>Deduct value from passes</span>
+                                </label>
+                                <div class="mt-4 col-span-3 flex space-x-2">
+                                    <button type="submit" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">
+                                        <span>Save permissions</span>
+                                        <i class="fas fa-save"></i>
+                                    </button>
+                                    <button type="submit" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-white bg-red-500 hover:bg-red-400">
+                                        <span>Remove organiser</span>
+                                        <i class="fas fa-minus-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </details>
                 </li>
             {% endfor %}
