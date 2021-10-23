@@ -1,3 +1,4 @@
+from flask.helpers import url_for
 from utils import users
 from app import app
 from flask import (
@@ -11,7 +12,7 @@ from flask import (
 def signin():
     if request.method == "GET":
         if users.is_signed_in():
-            return redirect("/")
+            return redirect(url_for("index"))
         else:
             return render_template("sign_in.html")
     else:
@@ -19,15 +20,15 @@ def signin():
         password = request.form["password"]
         if users.check_signin(username, password):
             users.signin(username)
-            return redirect("/")
+            return redirect(url_for("index"))
         else:
             flash("invalid_credentials")
-            return redirect("/signin")
+            return redirect(url_for("signin"))
 
 @app.route("/signout")
 def signout():
     users.signout()
-    return redirect("/")
+    return redirect(url_for("index"))
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -45,7 +46,7 @@ def signup():
             flash("username_taken")
             can_make_user = False
         if not can_make_user:
-            return redirect("/signup")
+            return redirect(url_for("signup"))
         users.new_user(username, new_password)
         users.signin(username)
-        return redirect("/")
+        return redirect(url_for("index"))
