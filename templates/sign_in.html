@@ -18,6 +18,7 @@
                     </div>
                 {% endif %}
             {% endwith %}
+            <input type="hidden" name="next" value="{{ request.args.get('next', '') }}"></input>
             <label for="username">
                 <div class="text-sm uppercase mb-1 opacity-60">Username</div>
                 <input type="text" id="username" name="username" class="px-3 py-2 w-full border border-gray-200 rounded" />
