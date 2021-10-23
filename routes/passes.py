@@ -1,3 +1,4 @@
+from flask.helpers import url_for
 from utils import tickets, events, users, passes
 from app import app
 from flask import (
@@ -27,7 +28,7 @@ def valuepass(id):
             id,
             request.form["extra-info"]
         )
-        return redirect(f"/event/{event.id}/tickets")
+        return redirect(url_for("event_tickets", event_id=event.id))
 
 @app.route("/pass/<id>/transactions")
 @users.requires_signin
