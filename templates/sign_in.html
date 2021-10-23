@@ -13,9 +13,12 @@
         <form action="/signin" method="post" class="flex flex-col space-y-4 py-2 border-t">
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
-                    <div class="bg-red-400 text-white p-4 rounded">
-                        Wrong username and/or password
-                    </div>
+                    <ul class="bg-red-400 text-white p-4 rounded">
+                        {% for message in messages %}
+                            {% if message == "invalid_credentials" %} <li>Wrong username and/or password</li> {% endif %}
+                            {% if message == "requires_signin" %} <li>You need to sign in to access that</li> {% endif %}
+                        {% endfor %}
+                    </ul>
                 {% endif %}
             {% endwith %}
             <input type="hidden" name="next" value="{{ request.args.get('next', '') }}"></input>
