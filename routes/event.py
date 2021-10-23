@@ -19,7 +19,7 @@ from flask import (
 def event_tickets(event_id):
     if not events.assert_user_owns_event(event_id): return
     event = events.get_event_info(event_id)
-    ticket = events.get_ticket_list(event_id)
+    ticketlist = events.get_ticket_list(event_id)
     if not event:
         flash("no_such_event")
         return(url_for("index"))
@@ -27,7 +27,7 @@ def event_tickets(event_id):
         return render_template(
             "event_tickets.html",
             event=event,
-            tickets=ticket
+            tickets=ticketlist
         )
     else:
         try:
@@ -43,7 +43,7 @@ def event_tickets(event_id):
 def event_passes(event_id):
     if not events.assert_user_owns_event(event_id): return
     event = events.get_event_info(event_id)
-    passe = events.get_pass_list(event_id)
+    passlist = events.get_pass_list(event_id)
     if not event:
         flash("no_such_event")
         return(url_for("index"))
@@ -51,7 +51,7 @@ def event_passes(event_id):
         return render_template(
             "event_passes.html",
             event=event,
-            passes=passe
+            passes=passlist
         )
     else:
         try:
