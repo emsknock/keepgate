@@ -18,9 +18,13 @@ def signin():
     else:
         username = request.form["username"]
         password = request.form["password"]
+        next_url = request.form["next"]
         if users.check_signin(username, password):
             users.signin(username)
-            return redirect(url_for("index"))
+            if next_url:
+                return redirect(next_url)
+            else:
+                return redirect(url_for("index"))
         else:
             flash("invalid_credentials")
             return redirect(url_for("signin"))
