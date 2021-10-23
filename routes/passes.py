@@ -66,8 +66,7 @@ def pass_management(pass_id):
 def pass_value(pass_id):
     
     valuepass = passes.get_pass(pass_id)
-    if not valuepass:
-        return abort(404)
+    if not valuepass: return abort(404)
     event = events.get_event_info(valuepass.event_id)
 
     if request.method == "GET":
