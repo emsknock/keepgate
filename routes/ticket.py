@@ -59,4 +59,4 @@ def ticket_check(ticket_id):
 def ticket_status(ticket_id):
     ticket = tickets.get_ticket(ticket_id)
     if not ticket: return abort(404)
-    return ticket.stamped
+    return "1" if ticket.stamped else "0"
