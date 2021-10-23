@@ -99,26 +99,14 @@
                         </summary>
                         <form action="/organiser/{{ event.id }}/{{ organiser.id }}" method="post" class="mt-2 flex flex-col items-center space-y-4">
                             <input type="hidden" name="csrf" value="{{ session.csrf_token }}"></input>
-                            <div class="grid grid-cols-3 grid-rows-2 gap-x-6 gap-y-1">
-                                <div class="col-span-3 opacity-60">
-                                    Permissions:
-                                </div>
-                                <label for="can-create" class="flex items-center space-x-2">
-                                    <input id="can-create" name="can-create" type="checkbox" {% if organiser.can_create %} checked {% endif %}></input>
-                                    <span>Create tickets and passes</span>
-                                </label>
-                                <label for="can-delete" class="flex items-center space-x-2">
-                                    <input id="can-delete" name="can-delete" type="checkbox" {% if organiser.can_delete %} checked {% endif %}></input>
-                                    <span>Delete tickets and passes</span>
-                                </label>
+                            <div class="grid grid-cols-2 grid-rows-3 gap-x-6 gap-y-1">
+                                
                                 <label for="can-stamp" class="flex items-center space-x-2">
                                     <input id="can-stamp" name="can-stamp" type="checkbox" {% if organiser.can_stamp %} checked {% endif %}></input>
                                     <span>Stamp tickets</span>
                                 </label>
-                                <label for="can-unstamp" class="flex items-center space-x-2">
-                                    <input id="can-unstamp" name="can-unstamp" type="checkbox" {% if organiser.can_unstamp %} checked {% endif %}></input>
-                                    <span>Unstamp tickets</span>
-                                </label>
+                                <span></span>
+
                                 <label for="can-topup" class="flex items-center space-x-2">
                                     <input id="can-topup" name="can-topup" type="checkbox" {% if organiser.can_topup %} checked {% endif %}></input>
                                     <span>Add value to passes</span>
@@ -127,7 +115,8 @@
                                     <input id="can-deduct" name="can-deduct" type="checkbox" {% if organiser.can_deduct %} checked {% endif %}></input>
                                     <span>Deduct value from passes</span>
                                 </label>
-                                <div class="mt-4 col-span-3 flex space-x-2">
+
+                                <div class="mt-4 col-span-2 flex space-x-2">
                                     <button type="submit" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">
                                         <span>Save permissions</span>
                                         <i class="fas fa-save"></i>
