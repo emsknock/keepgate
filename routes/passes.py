@@ -31,7 +31,7 @@ def valuepass(pass_id):
             pass_id,
             request.form["extra-info"]
         )
-        return redirect(url_for("event_tickets", event_id=event.id))
+        return redirect(url_for("event_passes", event_id=event.id))
 
 @app.route("/pass/<pass_id>/transactions")
 @users.requires_signin
