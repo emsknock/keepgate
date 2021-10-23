@@ -40,15 +40,24 @@ def event_tickets(event_id):
 @users.checks_csrf
 def event_passes(event_id):
     if not events.assert_user_owns_event(event_id): return
+    event = events.get_event_info(event_id)
+    passes = events.get_pass_list(event_id)
+    if not event:
+        flash("no_such_event")
+        return(url_for("index"))
     if request.method == "GET":
         return render_template(
             "event_passes.html",
-            event=events.get_event_info(event_id),
-            passes=events.get_pass_list(event_id)
+            event=event,
+            passes=passes
         )
     else:
-        passes.new_passes(event_id, int(request.form["new-pass-count"]))
-        return redirect(url_for("event_passes", event_id=event_id))
+        try:
+            pass_count = int(request.form["new-pass-count"])
+            passes.new_passes(event_id, pass_count)
+            return redirect(url_for("event_passes", event_id=event_id))
+        except:
+            return abort(400)
 
 @app.route("/event/<event_id>/organisers", methods=["GET", "POST"])
 @users.requires_signin
