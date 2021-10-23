@@ -31,7 +31,8 @@ CREATE TABLE passes (
     user_id     INTEGER REFERENCES users, -- Only set if requires login to display
     value       INTEGER DEFAULT 0,
     extra_info  TEXT,
-    created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    ON DELETE CASCADE
 );
 
 CREATE TABLE organisers (
