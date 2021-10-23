@@ -1,4 +1,4 @@
-from utils import events, users, tickets, passes
+from utils import events, users, tickets, passes, organisers
 from app import app
 from flask import (
     render_template,
@@ -42,17 +42,22 @@ def event_passes(id):
         passes.new_passes(id, int(request.form["new-pass-count"]))
         return redirect("./passes")
 
-@app.route("/event/<id>/organisers")
+@app.route("/event/<id>/organisers", methods=["GET", "POST"])
 @users.requires_signin
 def event_organisers(id):
     if not events.does_user_own_event(session["user_id"], id):
         flash("not_own_event")
         return redirect("/")
-    return render_template(
-        "event_organisers.html",
-        event=events.get_event_info(id),
-        organisers=events.get_organiser_list(id)
-    )
+    if request.method == "GET":
+        return render_template(
+            "event_organisers.html",
+            event=events.get_event_info(id),
+            organisers=events.get_organiser_list(id)
+        )
+    else:
+        new_organiser_id = users.get_id_by_username(request.form["new-organiser-username"])
+        organisers.add_organiser(id, new_organiser_id)
+        return redirect("./organisers")
 
 @app.route("/event/<id>", methods=["POST"])
 @users.requires_signin
