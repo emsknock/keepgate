@@ -45,6 +45,9 @@ def signup():
         can_make_user = True
         if len(username) > 32 or len(new_password) > 32:
             flash("credentials_too_long")
+        if len(username) < 1 or len(new_password) < 1:
+            flash("empty_credentials")
+            can_make_user = False
         if new_password != confirm_password:
             flash("password_nomatch")
             can_make_user = False
