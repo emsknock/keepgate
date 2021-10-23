@@ -63,11 +63,16 @@ def event_passes(event_id):
 @users.requires_signin
 def event_organisers(event_id):
     if not events.assert_user_owns_event(event_id): return
+    event = events.get_event_info(event_id)
+    organisers = events.get_organiser_list(event_id)
+    if not event:
+        flash("no_such_event")
+        return(url_for("index"))
     if request.method == "GET":
         return render_template(
             "event_organisers.html",
-            event=events.get_event_info(event_id),
-            organisers=events.get_organiser_list(event_id)
+            event=event,
+            organisers=organisers
         )
     else:
         new_organiser_id = users.get_id_by_username(request.form["new-organiser-username"])
