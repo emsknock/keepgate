@@ -16,7 +16,7 @@
                 {% for message in messages %}
                 <li>
                     {% if message == "not_own_event" or message == "no_such_event" %} You do not own that event or it doesn't exist {% endif %}
-                    {% if message == "no_permissions" } You do not have permission for that action {% endif %}
+                    {% if message == "no_permissions" %} You do not have permission for that action {% endif %}
                 </li>
                 {% endfor %}
             </ul>
