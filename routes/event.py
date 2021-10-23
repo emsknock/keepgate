@@ -1,5 +1,5 @@
 from app import app
-from utils import events, users
+from utils import events, tickets, users
 
 import re
 from sqlalchemy.exc import IntegrityError
@@ -19,7 +19,7 @@ from flask import (
 def event_tickets(event_id):
     if not events.assert_user_owns_event(event_id): return
     event = events.get_event_info(event_id)
-    tickets = events.get_ticket_list(event_id)
+    ticket = events.get_ticket_list(event_id)
     if not event:
         flash("no_such_event")
         return(url_for("index"))
@@ -27,7 +27,7 @@ def event_tickets(event_id):
         return render_template(
             "event_tickets.html",
             event=event,
-            tickets=tickets
+            tickets=ticket
         )
     else:
         try:
