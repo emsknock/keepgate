@@ -41,7 +41,7 @@ CREATE TABLE organisers (
     user_id     INTEGER REFERENCES users,
     UNIQUE (event_id, user_id),
     can_create  BOOLEAN, -- Can create tickets and passes
-    can_remove  BOOLEAN, -- Can remove tickets and passes
+    can_delete  BOOLEAN, -- Can remove tickets and passes
     can_stamp   BOOLEAN, -- Can mark tickets as stamped
     can_unstamp BOOLEAN, -- Can undo stamps on tickets
     can_topup   BOOLEAN, -- Can add value to passes
