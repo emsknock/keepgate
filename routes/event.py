@@ -13,9 +13,7 @@ from flask import (
 @users.requires_signin
 @users.checks_csrf
 def event_tickets(event_id):
-    if not events.does_user_own_event(session["user_id"], event_id):
-        flash("not_own_event")
-        return redirect("/")
+    events.assert_user_owns_event(event_id)
     if request.method == "GET":
         return render_template(
             "event_tickets.html",
@@ -30,9 +28,7 @@ def event_tickets(event_id):
 @users.requires_signin
 @users.checks_csrf
 def event_passes(event_id):
-    if not events.does_user_own_event(session["user_id"], event_id):
-        flash("not_own_event")
-        return redirect("/")
+    events.assert_user_owns_event(event_id)
     if request.method == "GET":
         return render_template(
             "event_passes.html",
@@ -46,9 +42,7 @@ def event_passes(event_id):
 @app.route("/event/<event_id>/organisers", methods=["GET", "POST"])
 @users.requires_signin
 def event_organisers(event_id):
-    if not events.does_user_own_event(session["user_id"], event_id):
-        flash("not_own_event")
-        return redirect("/")
+    events.assert_user_owns_event(event_id)
     if request.method == "GET":
         return render_template(
             "event_organisers.html",
@@ -73,17 +67,14 @@ def event_organisers(event_id):
 @users.requires_signin
 @users.checks_csrf
 def event(event_id):
-    if not events.does_user_own_event(session["user_id"], event_id):
-        flash("not_own_event")
-        return redirect("/")
-    else:
-        events.update_event_data(
-            event_id,
-            request.form["title"],
-            request.form["extra-info"],
-            request.form["date"]
-        )
-        return redirect(f"/event/{event_id}/tickets")
+    events.assert_user_owns_event(event_id)
+    events.update_event_data(
+        event_id,
+        request.form["title"],
+        request.form["extra-info"],
+        request.form["date"]
+    )
+    return redirect(f"/event/{event_id}/tickets")
 
 @app.route("/event", methods=["GET", "POST"])
 @users.requires_signin

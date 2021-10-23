@@ -1,4 +1,5 @@
 from db import exec, commit
+from flask import session, flash, redirect
 
 def new_event(user_id, title, extra_info = None, date = None):
     id = exec(
@@ -130,3 +131,8 @@ def does_user_own_event(user_id, event_id):
         return get_event_info(event_id).user_id == user_id
     except:
         return False
+
+def assert_user_owns_event(event_id):
+    if not does_user_own_event(session["user_id"], event_id):
+        flash("not_own_event")
+        redirect("/")
