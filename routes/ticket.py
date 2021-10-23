@@ -1,5 +1,5 @@
 from app import app
-from utils import tickets, events, users
+from utils import organisers, tickets, events, users
 
 from flask import (
     render_template,
@@ -44,6 +44,10 @@ def ticket_check(ticket_id):
     ticket = tickets.get_ticket(ticket_id)
     if not ticket: return abort(404)
     event = events.get_event_info(ticket.event_id)
+    permissions = organisers.get_permissions(event.id)
+    if not permissions or not permissions.can_stamp:
+        flash("no_permissions")
+        return redirect(url_for("index"))
     tickets.stamp_ticket(ticket_id, session["user_id"])
     return render_template(
         "ticket_check.html",

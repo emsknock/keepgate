@@ -1,4 +1,6 @@
 from db import exec, commit
+from utils import events
+from flask import session
 
 def delete_organiser(event_id, user_id):
     exec(
@@ -26,6 +28,22 @@ def add_organiser(event_id, user_id):
     )
     commit()
 
+def get_organiser(event_id, user_id):
+    result = exec(
+        """
+        SELECT can_create, can_delete,
+               can_stamp, can_unstamp,
+               can_topup, can_deduct
+        FROM organisers
+        WHERE event_id=:event_id AND user_id=:user_id
+        """,
+        {
+            "event_id": event_id,
+            "user_id": user_id
+        }
+    )
+    return result.fetchone()
+
 def update_organiser(user_id,
                      can_create = False, can_delete = False,
                      can_stamp = False, can_unstamp = False,
@@ -46,3 +64,12 @@ def update_organiser(user_id,
         }
     )
     commit()
+
+def get_permissions(event_id):
+    if events.does_user_own_event(session["user_id"], event_id):
+        return {
+            "can_create": True, "can_delete": True,
+            "can_stamp": True,   "can_unstamp": True,
+            "can_topup": True,   "can_deduct": True
+        }
+    return get_permissions(event_id, session["user_id"])
