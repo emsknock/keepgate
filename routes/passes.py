@@ -1,5 +1,5 @@
 from app import app
-from utils import events, users, passes
+from utils import events, organisers, users, passes
 
 from flask import (
     render_template,
@@ -73,11 +73,24 @@ def pass_value(pass_id):
     
     valuepass = passes.get_pass(pass_id)
     if not valuepass: return abort(404)
-    event = events.get_event_info(valuepass.event_id)
 
     if request.method == "GET":
         return str(valuepass.value);
-    else:
-        if not events.assert_user_owns_event(event.id): return # TODO: Check for organiser, not owner
-        return str(passes.pass_modify_value(pass_id, int(request.form["value-delta"]), session["user_id"]))
 
+    event = events.get_event_info(valuepass.event_id)
+    permissions = organisers.get_permissions(event.id)
+    if not permissions:
+        flash("no_permissions")
+        return redirect(url_for("index"))
+
+    try:
+        delta = int(request.form["value-delta"])
+        if (delta > 0 and not permissions.can_topup) or (delta < 0 and not permissions.can_deduct):
+            flash("no_permissions")
+            return redirect(url_for("index"))
+        newValue = passes.pass_modify_value(pass_id,
+                                            delta,
+                                            session["user_id"])
+        return newValue
+    except ValueError:
+        return abort(400)
