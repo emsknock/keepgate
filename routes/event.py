@@ -56,6 +56,12 @@ def event_organisers(id):
         )
     else:
         new_organiser_id = users.get_id_by_username(request.form["new-organiser-username"])
+        if not new_organiser_id:
+            flash("no_such_user")
+            return redirect("./organisers")
+        if new_organiser_id == session["user_id"]:
+            flash("refers_to_self")
+            return redirect("./organisers")
         organisers.add_organiser(id, new_organiser_id)
         return redirect("./organisers")
 

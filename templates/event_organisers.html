@@ -57,6 +57,18 @@
             <button type="submit" class="ml-4 cursor-pointer text-sm uppercase px-4 py-2 rounded text-blue-800 bg-blue-50 hover:bg-blue-100">
                 Add
             </button>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="my-2 bg-red-400 text-white p-2 rounded">
+                        {% for message in messages %}
+                        <li>
+                            {% if message == "no_such_user" %} No such username {% endif %}
+                            {% if message == "refers_to_self" %} You cannot add yourself as an organiser {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
         </form>
         <ul>
             {% for organiser in organisers %}

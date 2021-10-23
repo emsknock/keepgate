@@ -22,7 +22,8 @@ def get_id_by_username(username):
             "username": username
         }
     )
-    return result.fetchone()[0]
+    row = result.fetchone()
+    return row.id if row else None
 
 def check_signin(username, password):
     result = exec(
