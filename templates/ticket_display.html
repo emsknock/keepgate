@@ -25,9 +25,9 @@
         <img src="https://quickchart.io/qr?text=https%3A%2F%2Ftsoha-keepgate.herokuapp.com%2Fticket%2F{{ ticket.id }}%2Fcheck&margin=0&ecLevel=L&size=200&format=svg" alt="qr code"></img>
     </div>
     <div class="flex justify-center">
-        <span class="px-2 py-1 rounded-full flex items-center space-x-2 text-white {{ bg_class }}">
-            <i class="fas {{ icon }}"></i>
-            <span>{% if ticket_status == "not_stamped" %} Unstamped {% else %} Stamped {% endif %}</span>
+        <span id="status-bg" class="px-2 py-1 rounded-full flex items-center space-x-2 text-white {{ bg_class }}">
+            <i id="status-icon" class="fas {{ icon }}"></i>
+            <span id="status-text">{% if ticket_status == "not_stamped" %} Unstamped {% else %} Stamped {% endif %}</span>
         </span>
     </div>
     {% if ticket.extra_info or ticket.user_id %}
@@ -46,4 +46,27 @@
         Unstamp
     </div>
 </div>
+<script>
+    var statusBg = document.getElementById("status-bg");
+    var statusIcon = document.getElementById("status-icon");
+    var statusText = document.getElementById("status-text");
+    setInterval(
+        function() {
+            fetch("{{ url_for('ticket_status', ticket_id=ticket.id) }}")
+                .then(function (res) { return res.text() })
+                .then(function (val) {
+                    if (val === "0") {
+                        statusBg.setAttribute("class", "px-2 py-1 rounded-full flex items-center space-x-2 text-white bg-green-500")
+                        statusIcon.setAttribute("class", "fas fa-check-circle")
+                        statusText.innerText = "Unstamped";
+                    } else {
+                        statusBg.setAttribute("class", "px-2 py-1 rounded-full flex items-center space-x-2 text-white bg-yellow-500")
+                        statusIcon.setAttribute("class", "fas fa-certificate")
+                        statusText.innerText = "Stamped";
+                    }
+                })
+        },
+        1000
+    )
+</script>
 {% endblock %}
