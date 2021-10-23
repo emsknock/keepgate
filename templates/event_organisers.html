@@ -64,6 +64,7 @@
                         <li>
                             {% if message == "no_such_user" %} No such username {% endif %}
                             {% if message == "refers_to_self" %} You cannot add yourself as an organiser {% endif %}
+                            {% if message == "already_added" %} User is already an organiser {% endif %}
                         </li>
                         {% endfor %}
                     </ul>

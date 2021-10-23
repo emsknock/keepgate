@@ -1,5 +1,6 @@
 from utils import events, users, tickets, passes, organisers
 from app import app
+from sqlalchemy.exc import IntegrityError
 from flask import (
     render_template,
     redirect,
@@ -62,7 +63,10 @@ def event_organisers(id):
         if new_organiser_id == session["user_id"]:
             flash("refers_to_self")
             return redirect("./organisers")
-        organisers.add_organiser(id, new_organiser_id)
+        try:
+            organisers.add_organiser(id, new_organiser_id)
+        except IntegrityError:
+            flash("already_added")
         return redirect("./organisers")
 
 @app.route("/event/<id>", methods=["POST"])
