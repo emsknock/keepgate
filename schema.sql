@@ -1,7 +1,8 @@
 CREATE TABLE users (
     id          SERIAL PRIMARY KEY,
     username    TEXT UNIQUE NOT NULL,
-    passhash    TEXT NOT NULL
+    passhash    TEXT NOT NULL,
+    ON DELETE CASCADE
 );
 
 CREATE TABLE events (
