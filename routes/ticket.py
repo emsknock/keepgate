@@ -5,8 +5,7 @@ from flask import (
     redirect,
     session,
     request,
-    abort,
-    flash
+    abort
 )
 
 @app.route("/ticket/<id>", methods=["GET", "POST"])
@@ -23,9 +22,7 @@ def ticket(id):
             event=event
         )
     else:
-        if not events.does_user_own_event(session["user_id"], event.id):
-            flash("not_own_event")
-            return redirect("/")
+        if not events.assert_user_owns_event(event.id): return
         tickets.update_ticket_data(
             id,
             request.form["extra-info"]
