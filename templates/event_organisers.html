@@ -12,6 +12,19 @@
                 </a>
                 <input type="submit" class="cursor-pointer text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 rounded-full" value="Save"></input>
             </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="mx-4 bg-red-400 text-white p-4 rounded">
+                        {% for message in messages %}
+                        <li>
+                            {% if message == "no_title" %} Event must have a title {% endif %}
+                            {% if message == "too_long_title" %} Event title can be at most 32 characters {% endif %}
+                            {% if message == "too_long_info" %} Event info can be at most 512 characters {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
             <input type="text" id="title" name="title" placeholder="Event title" class="text-xl px-2 py-1 flex-grow border border-gray-200 rounded" value="{{ event.title }}" />
             <details>
                 <summary class="cursor-pointer">Details</summary>
