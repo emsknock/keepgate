@@ -23,9 +23,7 @@ def valuepass(id):
             event=event
         )
     else:
-        if not events.does_user_own_event(session["user_id"], event.id):
-            flash("not_own_event")
-            return redirect("/")
+        if not events.assert_user_owns_event(event.id): return
         passes.update_pass_data(
             id,
             request.form["extra-info"]
@@ -37,9 +35,7 @@ def valuepass(id):
 def pass_transactions(id):
     valuepass = passes.get_pass(id)
     event = events.get_event_info(valuepass.event_id)
-    if not events.does_user_own_event(session["user_id"], event.id):
-        flash("not_own_event")
-        redirect("/")
+    if not events.assert_user_owns_event(event.id): return
     return render_template(
         "pass_transactions.html",
         valuepass=valuepass,
@@ -72,8 +68,6 @@ def pass_value(id):
     if request.method == "GET":
         return str(valuepass.value);
     else:
-        if not events.does_user_own_event(session["user_id"], event.id):
-            flash("not_own_event")
-            return redirect("/") # TODO Check for organiser, not owner
+        if not events.assert_user_owns_event(event.id): return # TODO: Check for organiser, not owner
         return str(passes.pass_modify_value(id, int(request.form["value-delta"]), session["user_id"]))
 
