@@ -10,6 +10,10 @@
         <span class="font-bold">Pass transactions:</span>
         <span class="font-mono">{{ valuepass.id }}</span>
     </h1>
+    <span>
+        <span class="font-bold">Current value:</span>
+        <span class="font-mono">{{ valuepass.value }}</span>
+    </span>
 </div>
 <ul class="p-4 flex flex-col space-y-2">
     {% for transaction in transactions %}
