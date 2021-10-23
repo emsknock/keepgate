@@ -1,6 +1,15 @@
 from uuid import uuid4
 from db import exec, commit
 
+def delete_pass(pass_id):
+    exec(
+        "DELETE FROM passes WHERE id=:pass_id",
+        {
+            "pass_id": pass_id
+        }
+    )
+    commit()
+
 def new_passes(event_id, count):
     for _ in range(0, count):
         exec(

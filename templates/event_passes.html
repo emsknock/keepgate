@@ -96,7 +96,7 @@
                                         <span>Link to pass</span>
                                         <i class="fas fa-external-link-alt"></i>
                                     </a>
-                                    <button type="submit" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-white bg-red-500 hover:bg-red-400">
+                                    <button type="button" onClick="deletePass('{{ pass.id }}')" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-white bg-red-500 hover:bg-red-400">
                                         <span>Delete pass</span>
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
@@ -120,6 +120,18 @@
                 })
             })
             window.location.href = "{{ url_for('index') }}";
+        }
+    }
+    function deletePass(id) {
+        const sure = confirm("Are you sure you want to delte this pass?")
+        if (sure) {
+            fetch(`/pass/${id}`, {
+                method: "DELETE",
+                body: new URLSearchParams({
+                    "csrf": "{{ session.csrf_token }}"
+                })
+            })
+            window.location.reload();
         }
     }
 </script>
