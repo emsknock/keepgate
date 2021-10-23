@@ -13,9 +13,8 @@ from flask import (
 @users.checks_csrf
 def ticket(ticket_id):
     ticket = tickets.get_ticket(ticket_id)
+    if not ticket: return abort(404)
     event = events.get_event_info(ticket.event_id)
-    if not ticket:
-        return abort(404)
     if request.method == "GET":
         return render_template(
             "ticket_display.html",
