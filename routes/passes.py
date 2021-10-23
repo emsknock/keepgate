@@ -1,5 +1,5 @@
 from flask.helpers import flash, url_for
-from utils import tickets, events, users, passes
+from utils import events, users, passes
 from app import app
 from flask import (
     render_template,
