@@ -1,3 +1,4 @@
+from flask.helpers import url_for
 from db import exec, commit
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -51,7 +52,7 @@ def requires_signin(f):
         if "username" in session and session["username"] != "":
             return f(*args, **kwargs)
         else:
-            return redirect("/")
+            return redirect(url_for("signin", next=request.url))
     return decorated_function
 
 def checks_csrf(f):
