@@ -95,12 +95,15 @@ def event_organisers(event_id):
 @users.checks_csrf
 def event(event_id):
     if not events.assert_user_owns_event(event_id): return
-    events.update_event_data(
-        event_id,
-        request.form["title"],
-        request.form["extra-info"],
-        request.form["date"]
-    )
+    try:
+        events.update_event_data(
+            event_id,
+            request.form["title"],
+            request.form["extra-info"],
+            request.form["date"]
+        )
+    except:
+        return abort(400)
     return redirect(url_for("event_tickets", event_id=event_id))
 
 @app.route("/event", methods=["GET", "POST"])
