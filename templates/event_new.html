@@ -9,6 +9,7 @@
                     <ul class="mx-4 bg-red-400 text-white p-4 rounded">
                         {% for message in messages %}
                         <li>
+                            {% if message == "no_title" %} Event must have a title {% endif %}
                             {% if message == "too_long_title" %} Title cannot be over 32 characters {% endif %}
                             {% if message == "too_long_info" %} Extra information cannot be over 512 characters {% endif %}
                         </li>

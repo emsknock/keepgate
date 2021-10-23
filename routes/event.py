@@ -101,6 +101,9 @@ def event(event_id):
         extra_info = request.form["extra-info"]
         date = request.form["date"]
         can_make_event = True
+        if len(title) < 1:
+            flash("no_title")
+            can_make_event = False
         if len(title) > 32:
             flash("too_long_title")
             can_make_event = False
