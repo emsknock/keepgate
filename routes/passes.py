@@ -5,8 +5,7 @@ from flask import (
     redirect,
     session,
     request,
-    abort,
-    flash
+    abort
 )
 
 @app.route("/pass/<id>", methods=["GET", "POST"])
