@@ -85,12 +85,12 @@ def pass_value(pass_id):
 
     try:
         delta = int(request.form["value-delta"])
-        if (delta > 0 and not permissions.can_topup) or (delta < 0 and not permissions.can_deduct):
+        if (delta > 0 and not permissions["can_topup"]) or (delta < 0 and not permissions["can_deduct"]):
             flash("no_permissions")
             return redirect(url_for("index"))
         newValue = passes.pass_modify_value(pass_id,
                                             delta,
                                             session["user_id"])
-        return newValue
+        return str(newValue)
     except ValueError:
         return abort(400)
