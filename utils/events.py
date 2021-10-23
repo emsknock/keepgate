@@ -1,6 +1,15 @@
 from flask import session, flash, redirect, url_for
 from db import exec, commit
 
+def delete_event(event_id):
+    exec(
+        "DELETE FROM events WHERE id=:event_id",
+        {
+            "event_id": event_id
+        }
+    )
+    commit()
+
 def new_event(user_id, title, extra_info = None, date = None):
     id = exec(
         """

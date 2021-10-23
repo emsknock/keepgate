@@ -92,38 +92,42 @@ def event_organisers(event_id):
                 flash("already_added")
         return redirect(url_for("event_organisers", event_id=event_id))
 
-@app.route("/event/<event_id>", methods=["POST"])
+@app.route("/event/<event_id>", methods=["POST", "DELETE"])
 @users.requires_signin
 @users.checks_csrf
 def event(event_id):
     if not events.assert_user_owns_event(event_id): return
-    try:
-        title = request.form["title"]
-        extra_info = request.form["extra-info"]
-        date = request.form["date"]
-        can_make_event = True
-        if len(title) < 1:
-            flash("no_title")
-            can_make_event = False
-        if len(title) > 32:
-            flash("too_long_title")
-            can_make_event = False
-        if len(extra_info) > 512:
-            flash("too_long_info")
-            can_make_event = False
-        if date != "" and not re.match(r"\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])"):
+    if request.method == "DELETE":
+        events.delete_event(event_id)
+        return "", 200
+    else:
+        try:
+            title = request.form["title"]
+            extra_info = request.form["extra-info"]
+            date = request.form["date"]
+            can_make_event = True
+            if len(title) < 1:
+                flash("no_title")
+                can_make_event = False
+            if len(title) > 32:
+                flash("too_long_title")
+                can_make_event = False
+            if len(extra_info) > 512:
+                flash("too_long_info")
+                can_make_event = False
+            if date != "" and not re.match(r"\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])"):
+                return abort(400)
+            if not can_make_event:
+                return redirect(request.referrer)
+            events.update_event_data(
+                event_id,
+                title,
+                extra_info,
+                date
+            )
+        except:
             return abort(400)
-        if not can_make_event:
-            return redirect(request.referrer)
-        events.update_event_data(
-            event_id,
-            title,
-            extra_info,
-            date
-        )
-    except:
-        return abort(400)
-    return redirect(url_for("event_tickets", event_id=event_id))
+        return redirect(url_for("event_tickets", event_id=event_id))
 
 @app.route("/event", methods=["GET", "POST"])
 @users.requires_signin

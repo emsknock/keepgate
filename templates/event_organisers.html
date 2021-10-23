@@ -43,6 +43,7 @@
                         </div>
                         <textarea id="extra-info" name="extra-info" rows="4" class="px-3 py-2 w-full border border-gray-200 rounded">{{ event.extra_info }}</textarea>
                     </label>
+                    <button type="button" onClick="deleteEvent()">Delete event</button>
                 </div>
             </details>
             <nav class="border-t pt-4 flex flex-col space-y-3">
@@ -106,4 +107,18 @@
 
     </div>
 </div>
+<script>
+    function deleteEvent() {
+        const sure = confirm("Are you sure you want to delete this event?")
+        if (sure) {
+            fetch("/event/{{ event.id }}", {
+                method: "DELETE",
+                body: new URLSearchParams({
+                    "csrf": "{{ session.csrf_token }}"
+                })
+            })
+            window.location.href = "{{ url_for('index') }}";
+        }
+    }
+</script>
 {% endblock %}
