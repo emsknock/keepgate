@@ -111,7 +111,7 @@ def event(event_id):
         if len(extra_info) > 512:
             flash("too_long_info")
             can_make_event = False
-        if not re.match(r"\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])"):
+        if date != "" and not re.match(r"\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])"):
             return abort(400)
         if not can_make_event:
             return url_for("new_event")
