@@ -50,5 +50,5 @@ CREATE TABLE pass_transactions (
     pass_id     UUID REFERENCES passes,
     user_id     INTEGER REFERENCES users,
     value       INTEGER,
-    time        TIMESTAMP WITH TIME ZONE
+    time        TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
