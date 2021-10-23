@@ -14,7 +14,7 @@ from flask import (
 @users.requires_signin
 @users.checks_csrf
 def event_tickets(event_id):
-    events.assert_user_owns_event(event_id)
+    if not events.assert_user_owns_event(event_id): return
     if request.method == "GET":
         return render_template(
             "event_tickets.html",
@@ -29,7 +29,7 @@ def event_tickets(event_id):
 @users.requires_signin
 @users.checks_csrf
 def event_passes(event_id):
-    events.assert_user_owns_event(event_id)
+    if not events.assert_user_owns_event(event_id): return
     if request.method == "GET":
         return render_template(
             "event_passes.html",
@@ -43,7 +43,7 @@ def event_passes(event_id):
 @app.route("/event/<event_id>/organisers", methods=["GET", "POST"])
 @users.requires_signin
 def event_organisers(event_id):
-    events.assert_user_owns_event(event_id)
+    if not events.assert_user_owns_event(event_id): return
     if request.method == "GET":
         return render_template(
             "event_organisers.html",
@@ -70,7 +70,7 @@ def event_organisers(event_id):
 @users.requires_signin
 @users.checks_csrf
 def event(event_id):
-    events.assert_user_owns_event(event_id)
+    if not events.assert_user_owns_event(event_id): return
     events.update_event_data(
         event_id,
         request.form["title"],

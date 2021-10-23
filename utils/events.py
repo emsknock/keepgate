@@ -1,3 +1,4 @@
+from flask.helpers import url_for
 from db import exec, commit
 from flask import session, flash, redirect
 
@@ -135,4 +136,6 @@ def does_user_own_event(user_id, event_id):
 def assert_user_owns_event(event_id):
     if not does_user_own_event(session["user_id"], event_id):
         flash("not_own_event")
-        redirect("/")
+        redirect(url_for("index"))
+        return False
+    return True
