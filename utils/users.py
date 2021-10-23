@@ -71,7 +71,6 @@ def checks_csrf(f):
             return abort(403)
     return decorated_function
 
-
 def is_signed_in(): return (
     "username" in session and
     "user_id" in session and
