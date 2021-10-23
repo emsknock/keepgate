@@ -26,6 +26,7 @@ def get_detailed_event_list(user_id):
                (SELECT COUNT(*) FROM organisers WHERE event_id = e.id) as organiser_count
         FROM events e
         WHERE e.user_id = :user_id
+        ORDER BY e.date ASC
         """,
         {
             "user_id": user_id
