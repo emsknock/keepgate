@@ -9,51 +9,51 @@ from flask import (
     flash
 )
 
-@app.route("/event/<id>/tickets", methods=["GET", "POST"])
+@app.route("/event/<event_id>/tickets", methods=["GET", "POST"])
 @users.requires_signin
 @users.checks_csrf
-def event_tickets(id):
-    if not events.does_user_own_event(session["user_id"], id):
+def event_tickets(event_id):
+    if not events.does_user_own_event(session["user_id"], event_id):
         flash("not_own_event")
         return redirect("/")
     if request.method == "GET":
         return render_template(
             "event_tickets.html",
-            event=events.get_event_info(id),
-            tickets=events.get_ticket_list(id)
+            event=events.get_event_info(event_id),
+            tickets=events.get_ticket_list(event_id)
         )
     else:
-        tickets.new_tickets(id, int(request.form["new-ticket-count"]))
+        tickets.new_tickets(event_id, int(request.form["new-ticket-count"]))
         return redirect("./tickets")
 
-@app.route("/event/<id>/passes", methods=["GET", "POST"])
+@app.route("/event/<event_id>/passes", methods=["GET", "POST"])
 @users.requires_signin
 @users.checks_csrf
-def event_passes(id):
-    if not events.does_user_own_event(session["user_id"], id):
+def event_passes(event_id):
+    if not events.does_user_own_event(session["user_id"], event_id):
         flash("not_own_event")
         return redirect("/")
     if request.method == "GET":
         return render_template(
             "event_passes.html",
-            event=events.get_event_info(id),
-            passes=events.get_pass_list(id)
+            event=events.get_event_info(event_id),
+            passes=events.get_pass_list(event_id)
         )
     else:
-        passes.new_passes(id, int(request.form["new-pass-count"]))
+        passes.new_passes(event_id, int(request.form["new-pass-count"]))
         return redirect("./passes")
 
-@app.route("/event/<id>/organisers", methods=["GET", "POST"])
+@app.route("/event/<event_id>/organisers", methods=["GET", "POST"])
 @users.requires_signin
-def event_organisers(id):
-    if not events.does_user_own_event(session["user_id"], id):
+def event_organisers(event_id):
+    if not events.does_user_own_event(session["user_id"], event_id):
         flash("not_own_event")
         return redirect("/")
     if request.method == "GET":
         return render_template(
             "event_organisers.html",
-            event=events.get_event_info(id),
-            organisers=events.get_organiser_list(id)
+            event=events.get_event_info(event_id),
+            organisers=events.get_organiser_list(event_id)
         )
     else:
         new_organiser_id = users.get_id_by_username(request.form["new-organiser-username"])
@@ -64,26 +64,26 @@ def event_organisers(id):
             flash("refers_to_self")
             return redirect("./organisers")
         try:
-            organisers.add_organiser(id, new_organiser_id)
+            organisers.add_organiser(event_id, new_organiser_id)
         except IntegrityError:
             flash("already_added")
         return redirect("./organisers")
 
-@app.route("/event/<id>", methods=["POST"])
+@app.route("/event/<event_id>", methods=["POST"])
 @users.requires_signin
 @users.checks_csrf
-def event(id):
-    if not events.does_user_own_event(session["user_id"], id):
+def event(event_id):
+    if not events.does_user_own_event(session["user_id"], event_id):
         flash("not_own_event")
         return redirect("/")
     else:
         events.update_event_data(
-            id,
+            event_id,
             request.form["title"],
             request.form["extra-info"],
             request.form["date"]
         )
-        return redirect(f"/event/{id}/tickets")
+        return redirect(f"/event/{event_id}/tickets")
 
 @app.route("/event", methods=["GET", "POST"])
 @users.requires_signin
