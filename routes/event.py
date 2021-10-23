@@ -1,3 +1,4 @@
+import re
 from flask.helpers import url_for
 from utils import events, users, tickets, passes, organisers
 from app import app
@@ -96,11 +97,25 @@ def event_organisers(event_id):
 def event(event_id):
     if not events.assert_user_owns_event(event_id): return
     try:
+        title = request.form["title"]
+        extra_info = request.form["extra-info"]
+        date = request.form["date"]
+        can_make_event = True
+        if len(title) > 32:
+            flash("too_long_title")
+            can_make_event = False
+        if len(extra_info) > 512:
+            flash("too_long_info")
+            can_make_event = False
+        if not re.match(r"\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])"):
+            return abort(400)
+        if not can_make_event:
+            return url_for("new_event")
         events.update_event_data(
             event_id,
-            request.form["title"],
-            request.form["extra-info"],
-            request.form["date"]
+            title,
+            extra_info,
+            date
         )
     except:
         return abort(400)
