@@ -107,7 +107,7 @@
                                         <span>Link to ticket</span>
                                         <i class="fas fa-external-link-alt"></i>
                                     </a>
-                                    <button type="submit" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-white bg-red-500 hover:bg-red-400">
+                                    <button type="button" onClick="deleteTicket('{{ ticket.id }}')" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-white bg-red-500 hover:bg-red-400">
                                         <span>Delete ticket</span>
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
@@ -131,6 +131,18 @@
                 })
             })
             window.location.href = "{{ url_for('index') }}";
+        }
+    }
+    function deleteTicket(id) {
+        const sure = confirm("Are you sure you want to delte this ticket?")
+        if (sure) {
+            fetch(`/ticket/${id}`, {
+                method: "DELETE",
+                body: new URLSearchParams({
+                    "csrf": "{{ session.csrf_token }}"
+                })
+            })
+            window.location.reload();
         }
     }
 </script>

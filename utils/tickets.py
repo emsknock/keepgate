@@ -1,6 +1,15 @@
 from uuid import uuid4
 from db import exec, commit
 
+def delete_ticket(ticket_id):
+    exec(
+        "DELETE FROM tickets WHERE id=:ticket_id",
+        {
+            "ticket_id": ticket_id
+        }
+    )
+    commit()
+
 def new_tickets(event_id, count):
     for _ in range(0, count):
         exec(

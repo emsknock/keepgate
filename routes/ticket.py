@@ -11,7 +11,7 @@ from flask import (
     url_for
 )
 
-@app.route("/ticket/<ticket_id>", methods=["GET", "POST"])
+@app.route("/ticket/<ticket_id>", methods=["GET", "POST", "DELETE"])
 @users.checks_csrf
 def ticket(ticket_id):
     ticket = tickets.get_ticket(ticket_id)
@@ -23,7 +23,7 @@ def ticket(ticket_id):
             ticket=ticket,
             event=event
         )
-    else:
+    if request.method == "POST":
         if not events.assert_user_owns_event(event.id): return
         if len(request.form["extra-info"]) > 512:
             flash("too_long_info")
@@ -33,6 +33,10 @@ def ticket(ticket_id):
             request.form["extra-info"]
         )
         return redirect(url_for("event_tickets", event.id))
+    if request.method == "DELETE":
+        if not events.assert_user_owns_event(event.id): return abort(401)
+        tickets.delete_ticket(ticket_id)
+        return "", 200
 
 @app.route("/ticket/<ticket_id>/check")
 @users.requires_signin
