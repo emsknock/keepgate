@@ -37,6 +37,7 @@ def valuepass(pass_id):
 @users.requires_signin
 def pass_transactions(pass_id):
     valuepass = passes.get_pass(pass_id)
+    if not valuepass: return abort(404)
     event = events.get_event_info(valuepass.event_id)
     if not events.assert_user_owns_event(event.id): return
     return render_template(
