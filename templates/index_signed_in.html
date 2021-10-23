@@ -34,19 +34,23 @@
                 </li>
             {% endfor %}
         </ul>
-        <h2>Events you are an organiser of:</h2>
-        <ul class="my-2 flex flex-col space-y-2">
-            <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
-                <span class="flex-grow flex items-center space-x-4">
-                    <a href="#" class="text-blue-800 font-bold capitalize">Pippalot</a>
-                    <span class="text-sm opacity-60">(emsknock)</span>
-                </span>
-                <span class="text-sm uppercase opacity-60">50 tickets</span>
-                <span class="text-sm uppercase opacity-60">20 passes</span>
-                <span class="text-sm uppercase opacity-60">6 organisers</span>
-                <span class="text-sm uppercase opacity-60">21.9.2022</span>
-            </li>
-        </ul>
+        {% if organised_events %}
+            <h2>Events you are an organiser of:</h2>
+            <ul class="my-2 flex flex-col space-y-2">
+                {% for event in organised_events %}
+                    <li class="flex space-x-8 items-center bg-gray-50 px-3 py-2 rounded">
+                        <span class="flex-grow flex items-center space-x-4">
+                            <span class="font-bold capitalize opacity-60">{{ event.title }}</span>
+                            <span class="text-sm opacity-60">(by {{ event.username }})</span>
+                        </span>
+                        <span class="flex-grow"></span>
+                        <span class="text-sm uppercase opacity-60">
+                            {% if event.date %} {{ event.date.strftime("%Y-%m-%d") }} {% else %} No date {% endif %}
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </article>
 </div>
 {% endblock %}

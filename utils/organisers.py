@@ -15,6 +15,22 @@ def delete_organiser(event_id, user_id):
     )
     commit()
 
+def get_user_organised_events(user_id):
+    result = exec(
+        """
+        SELECT e.id, e.title, e.date,
+               (SELECT username FROM users u WHERE u.id = e.user_id) AS username
+        FROM organisers o
+            LEFT JOIN events e
+            ON o.event_id = e.id
+        WHERE o.user_id=:user_id
+        """,
+        {
+            "user_id": user_id
+        }
+    )
+    return result.fetchall()
+
 def add_organiser(event_id, user_id):
     exec(
         """
