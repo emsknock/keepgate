@@ -36,9 +36,8 @@ def ticket(ticket_id):
 @users.requires_signin
 def ticket_check(ticket_id):
     ticket = tickets.get_ticket(ticket_id)
+    if not ticket: return abort(404)
     event = events.get_event_info(ticket.event_id)
-    if not ticket:
-        return abort(404)
     tickets.stamp_ticket(ticket_id, session["user_id"])
     return render_template(
         "ticket_check.html",
