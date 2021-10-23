@@ -1,5 +1,5 @@
 from app import app
-from utils import events, tickets, users
+from utils import events, tickets, users, passes
 
 import re
 from sqlalchemy.exc import IntegrityError
@@ -43,7 +43,7 @@ def event_tickets(event_id):
 def event_passes(event_id):
     if not events.assert_user_owns_event(event_id): return
     event = events.get_event_info(event_id)
-    passes = events.get_pass_list(event_id)
+    passe = events.get_pass_list(event_id)
     if not event:
         flash("no_such_event")
         return(url_for("index"))
@@ -51,7 +51,7 @@ def event_passes(event_id):
         return render_template(
             "event_passes.html",
             event=event,
-            passes=passes
+            passes=passe
         )
     else:
         try:
