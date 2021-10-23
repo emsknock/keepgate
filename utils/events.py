@@ -120,7 +120,7 @@ def get_pass_list(event_id):
 def get_organiser_list(event_id):
     result = exec(
         """
-        SELECT username,
+        SELECT id, username,
                can_create, can_remove,
                can_stamp, can_unstamp,
                can_topup, can_deduct
