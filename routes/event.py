@@ -132,8 +132,8 @@ def new_event():
     if request.method == "GET":
         return render_template("event_new.html")
     else:
-        title = request.form["title"],
-        extra_info = request.form["extra-info"],
+        title = request.form["title"]
+        extra_info = request.form["extra-info"]
         date = request.form["date"]
         can_make_event = True
         if len(title) < 1:
