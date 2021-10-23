@@ -1,6 +1,5 @@
-from flask.helpers import url_for
+from flask import session, flash, redirect, url_for
 from db import exec, commit
-from flask import session, flash, redirect
 
 def new_event(user_id, title, extra_info = None, date = None):
     id = exec(

@@ -1,10 +1,16 @@
-from flask.helpers import flash, url_for
 from db import exec, commit
-from werkzeug.security import check_password_hash, generate_password_hash
 
 from functools import wraps
-from flask import redirect, request, session, abort
 from secrets import token_hex
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask import (
+    redirect,
+    request,
+    session,
+    abort,
+    flash,
+    url_for
+)
 
 def new_user(username, password):
     exec(
