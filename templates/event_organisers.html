@@ -132,7 +132,7 @@
                                         <span>Save permissions</span>
                                         <i class="fas fa-save"></i>
                                     </button>
-                                    <button type="submit" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-white bg-red-500 hover:bg-red-400">
+                                    <button type="button" onClick="deleteOrganiser('{{ organiser.id }}')" class="cursor-pointer flex-auto flex justify-center items-center space-x-2 text-sm uppercase px-4 py-2 rounded text-white bg-red-500 hover:bg-red-400">
                                         <span>Remove organiser</span>
                                         <i class="fas fa-minus-circle"></i>
                                     </button>
@@ -157,6 +157,18 @@
                 })
             })
             window.location.href = "{{ url_for('index') }}";
+        }
+    }
+    function deleteOrganiser(id) {
+        const sure = confirm("Are you sure you want to delete this organiser?")
+        if (sure) {
+            fetch(`/organiser/{{ event.id }}/${id}`, {
+                method: "DELETE",
+                body: new URLSearchParams({
+                    "csrf": "{{ session.csrf_token }}"
+                })
+            })
+            window.location.reload();
         }
     }
 </script>

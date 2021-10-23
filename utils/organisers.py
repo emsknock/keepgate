@@ -1,5 +1,18 @@
 from db import exec, commit
 
+def delete_organiser(event_id, user_id):
+    exec(
+        """
+        DELETE FROM organisers
+        WHERE event_id=:event_id AND user_id=:user_id
+        """,
+        {
+            "event_id": event_id,
+            "user_id": user_id
+        }
+    )
+    commit()
+
 def add_organiser(event_id, user_id):
     exec(
         """

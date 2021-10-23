@@ -14,8 +14,8 @@ from flask import (
 @app.route("/organiser/<event_id>/<organiser_id>", methods=["POST", "DELETE"])
 @users.checks_csrf
 def organiser(event_id, organiser_id):
+    if not events.assert_user_owns_event(event_id): return
     if request.method == "POST":
-        if not events.assert_user_owns_event(event_id): return
         organisers.update_organiser(
             organiser_id,
             can_create = bool(request.form.get("can-create")),
@@ -26,3 +26,6 @@ def organiser(event_id, organiser_id):
             can_deduct = bool(request.form.get("can-deduct"))
         )
         return redirect(url_for("event_organisers", event_id=event_id))
+    if request.method == "DELETE":
+        organisers.delete_organiser(event_id, organiser_id)
+        return "", 200
