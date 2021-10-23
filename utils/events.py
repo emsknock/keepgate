@@ -80,6 +80,7 @@ def get_ticket_list(event_id):
                (SELECT username FROM users WHERE id = stamped_by) AS stamped_by_username
         FROM tickets
         WHERE event_id=:event_id
+        ORDER BY created_at DESC
         """,
         {
             "event_id": event_id
@@ -96,6 +97,7 @@ def get_pass_list(event_id):
                value
         FROM passes
         WHERE event_id=:event_id
+        ORDER BY created_at DESC
         """,
         {
             "event_id": event_id
