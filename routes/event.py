@@ -1,7 +1,7 @@
-import re
-from flask.helpers import url_for
-from utils import events, users, tickets, passes, organisers
 from app import app
+from utils import events, users
+
+import re
 from sqlalchemy.exc import IntegrityError
 from flask import (
     render_template,
@@ -9,7 +9,8 @@ from flask import (
     request,
     session,
     flash,
-    abort
+    abort,
+    url_for
 )
 
 @app.route("/event/<event_id>/tickets", methods=["GET", "POST"])

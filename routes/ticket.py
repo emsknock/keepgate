@@ -1,12 +1,14 @@
-from flask.helpers import flash, url_for
-from utils import tickets, events, users
 from app import app
+from utils import tickets, events, users
+
 from flask import (
     render_template,
     redirect,
     session,
     request,
-    abort
+    abort,
+    flash,
+    url_for
 )
 
 @app.route("/ticket/<ticket_id>", methods=["GET", "POST"])

@@ -1,5 +1,6 @@
-from utils import events, users, tickets
 from app import app
+from utils import events, users
+
 from flask import (
     render_template,
     session,

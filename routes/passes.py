@@ -1,12 +1,14 @@
-from flask.helpers import flash, url_for
-from utils import events, users, passes
 from app import app
+from utils import events, users, passes
+
 from flask import (
     render_template,
     redirect,
     session,
     request,
-    abort
+    abort,
+    flash,
+    url_for
 )
 
 @app.route("/pass/<pass_id>", methods=["GET", "POST"])

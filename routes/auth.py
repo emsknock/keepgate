@@ -1,11 +1,12 @@
-from flask.helpers import url_for
-from utils import users
 from app import app
+from utils import users
+
 from flask import (
     render_template,
     redirect,
     request,
-    flash
+    flash,
+    url_for
 )
 
 @app.route("/signin", methods=["GET", "POST"])
