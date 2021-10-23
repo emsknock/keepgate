@@ -14,8 +14,8 @@
         {% if messages %}
             <ul class="mx-4 bg-red-400 text-white p-4 rounded">
                 {% for message in messages %}
-                <li >
-                    {% if message == "not_own_event" %} You do not own that event {% endif %}
+                <li>
+                    {% if message == "not_own_event" or message == "no_such_event" %} You do not own that event or it doesn't exist {% endif %}
                 </li>
                 {% endfor %}
             </ul>

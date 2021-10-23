@@ -15,11 +15,16 @@ from flask import (
 @users.checks_csrf
 def event_tickets(event_id):
     if not events.assert_user_owns_event(event_id): return
+    event = events.get_event_info(event_id)
+    tickets = events.get_ticket_list(event_id)
+    if not event:
+        flash("no_such_event")
+        return(url_for("index"))
     if request.method == "GET":
         return render_template(
             "event_tickets.html",
-            event=events.get_event_info(event_id),
-            tickets=events.get_ticket_list(event_id)
+            event=event,
+            tickets=tickets
         )
     else:
         tickets.new_tickets(event_id, int(request.form["new-ticket-count"]))
