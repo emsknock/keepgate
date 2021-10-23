@@ -9,10 +9,10 @@ from flask import (
     abort
 )
 
-@app.route("/pass/<id>", methods=["GET", "POST"])
+@app.route("/pass/<pass_id>", methods=["GET", "POST"])
 @users.checks_csrf
-def valuepass(id):
-    valuepass = passes.get_pass(id)
+def valuepass(pass_id):
+    valuepass = passes.get_pass(pass_id)
     event = events.get_event_info(valuepass.event_id)
     if not valuepass:
         return abort(404)
@@ -25,27 +25,27 @@ def valuepass(id):
     else:
         if not events.assert_user_owns_event(event.id): return
         passes.update_pass_data(
-            id,
+            pass_id,
             request.form["extra-info"]
         )
         return redirect(url_for("event_tickets", event_id=event.id))
 
-@app.route("/pass/<id>/transactions")
+@app.route("/pass/<pass_id>/transactions")
 @users.requires_signin
-def pass_transactions(id):
-    valuepass = passes.get_pass(id)
+def pass_transactions(pass_id):
+    valuepass = passes.get_pass(pass_id)
     event = events.get_event_info(valuepass.event_id)
     if not events.assert_user_owns_event(event.id): return
     return render_template(
         "pass_transactions.html",
         valuepass=valuepass,
-        transactions=passes.get_pass_transactions(id)
+        transactions=passes.get_pass_transactions(pass_id)
     )
 
-@app.route("/pass/<id>/manage")
+@app.route("/pass/<pass_id>/manage")
 @users.requires_signin
-def pass_management(id):
-    valuepass = passes.get_pass(id)
+def pass_management(pass_id):
+    valuepass = passes.get_pass(pass_id)
     event = events.get_event_info(valuepass.event_id)
     if not valuepass:
         return abort(404)
@@ -55,12 +55,12 @@ def pass_management(id):
         event=event
     )
 
-@app.route("/pass/<id>/value", methods=["GET", "POST"])
+@app.route("/pass/<pass_id>/value", methods=["GET", "POST"])
 @users.requires_signin
 @users.checks_csrf
-def pass_value(id):
+def pass_value(pass_id):
     
-    valuepass = passes.get_pass(id)
+    valuepass = passes.get_pass(pass_id)
     if not valuepass:
         return abort(404)
     event = events.get_event_info(valuepass.event_id)
@@ -69,5 +69,5 @@ def pass_value(id):
         return str(valuepass.value);
     else:
         if not events.assert_user_owns_event(event.id): return # TODO: Check for organiser, not owner
-        return str(passes.pass_modify_value(id, int(request.form["value-delta"]), session["user_id"]))
+        return str(passes.pass_modify_value(pass_id, int(request.form["value-delta"]), session["user_id"]))
 
