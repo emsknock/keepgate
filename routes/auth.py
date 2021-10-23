@@ -19,15 +19,15 @@ def signin():
         username = request.form["username"]
         password = request.form["password"]
         next_url = request.form["next"]
-        if users.check_signin(username, password):
+        if len(username) > 32 or len(password) > 32 or not users.check_signin(username, password):
+            flash("invalid_credentials")
+            return redirect(url_for("signin"))
+        else:
             users.signin(username)
             if next_url:
                 return redirect(next_url)
             else:
                 return redirect(url_for("index"))
-        else:
-            flash("invalid_credentials")
-            return redirect(url_for("signin"))
 
 @app.route("/signout")
 def signout():
@@ -43,6 +43,8 @@ def signup():
         new_password = request.form["new-password"]
         confirm_password = request.form["confirm-password"]
         can_make_user = True
+        if len(username) > 32 or len(new_password) > 32:
+            flash("credentials_too_long")
         if new_password != confirm_password:
             flash("password_nomatch")
             can_make_user = False

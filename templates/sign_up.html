@@ -15,10 +15,11 @@
                 {% if messages %}
                     <ul class="bg-red-400 text-white p-4 rounded">
                         {% for message in messages %}
-                        <li >
-                            {% if message == "username_taken" %} Username already taken {% endif %}
-                            {% if message == "password_nomatch" %} Passwords don't match {% endif %}
-                        </li>
+                            <li>
+                                {% if message == "username_taken" %} Username already taken {% endif %}
+                                {% if message == "password_nomatch" %} Passwords don't match {% endif %}
+                                {% if message == "credentials_too_long" } Username or password cannot be over 32 characters in length {% endif %}
+                            </li>
                         {% endfor %}
                     </ul>
                 {% endif %}
