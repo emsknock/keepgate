@@ -9,7 +9,8 @@ CREATE TABLE events (
     user_id     INTEGER REFERENCES users NOT NULL,
     title       TEXT NOT NULL, -- Title of the event shown on all tickets
     extra_info  TEXT, -- Extra info shown on all tickets
-    date        TIMESTAMP WITH TIME ZONE -- Date shown on all tickets
+    date        TIMESTAMP WITH TIME ZONE -- Date shown on all tickets,
+    ON DELETE CASCADE
 );
 
 CREATE TABLE tickets (
