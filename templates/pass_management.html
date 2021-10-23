@@ -11,8 +11,8 @@
     {% endif %}
     <form class="border-t pt-3 flex flex-col ">
         <input type="number" id="value-delta" name="value-delta" value="1" min="1" max="10000"></input>
-        <button type="button" onClick="post(valueDelta.value)">Add</button>
-        <button type="button" onClick="post(-valueDelta.value)">Deduct</button>
+        {% if permissions.can_topup %} <button type="button" onClick="post(valueDelta.value)">Add</button> {% endif %}
+        {% if permissions.can_deduct %} <button type="button" onClick="post(-valueDelta.value)">Deduct</button> {% endif %}
     </form>
 </div>
 <script>
