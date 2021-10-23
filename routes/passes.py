@@ -58,12 +58,17 @@ def pass_management(pass_id):
     valuepass = passes.get_pass(pass_id)
     if not valuepass: return abort(404)
     event = events.get_event_info(valuepass.event_id)
+    permissions = organisers.get_permissions(event.id)
     if not valuepass:
         return abort(404)
+    if not permissions["can_topup"] and not permissions["can_deduct"]:
+        flash("no_permissions")
+        return redirect(url_for("index"))
     return render_template(
         "pass_management.html",
         valuepass=valuepass,
-        event=event
+        event=event,
+        permissions=permissions
     )
 
 @app.route("/pass/<pass_id>/value", methods=["GET", "POST"])
