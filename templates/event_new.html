@@ -4,6 +4,18 @@
 <div class="w-screen h-screen flex justify-center items-center">
     <div class="px-4 py-4 bg-gray-50 rounded-lg">
         <form action="/event" method="post" class="flex flex-col space-y-4">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="mx-4 bg-red-400 text-white p-4 rounded">
+                        {% for message in messages %}
+                        <li>
+                            {% if message == "too_long_title" %} Title cannot be over 32 characters {% endif %}
+                            {% if message == "too_long_info" %} Extra information cannot be over 512 characters {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
             <input type="hidden" name="csrf" value="{{ session.csrf_token }}"></input>
             <div class="flex justify-between items-center space-x-4 pb-3 border-b">
                 <input type="text" id="title" name="title" placeholder="Event title" class="text-xl px-2 py-1 flex-grow border border-gray-200 rounded" />
