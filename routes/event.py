@@ -7,7 +7,8 @@ from flask import (
     redirect,
     request,
     session,
-    flash
+    flash,
+    abort
 )
 
 @app.route("/event/<event_id>/tickets", methods=["GET", "POST"])
@@ -27,8 +28,12 @@ def event_tickets(event_id):
             tickets=tickets
         )
     else:
-        tickets.new_tickets(event_id, int(request.form["new-ticket-count"]))
-        return redirect(url_for("event_tickets", event_id=event_id))
+        try:
+            ticket_count = int(request.form["new-ticket-count"])
+            tickets.new_tickets(event_id, ticket_count)
+            return redirect(url_for("event_tickets", event_id=event_id))
+        except:
+            return abort(400)
 
 @app.route("/event/<event_id>/passes", methods=["GET", "POST"])
 @users.requires_signin
