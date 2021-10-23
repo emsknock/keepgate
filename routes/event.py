@@ -114,7 +114,7 @@ def event(event_id):
         if date != "" and not re.match(r"\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])"):
             return abort(400)
         if not can_make_event:
-            return redirect(url_for("event", event_id=event_id))
+            return redirect(request.referrer)
         events.update_event_data(
             event_id,
             title,
