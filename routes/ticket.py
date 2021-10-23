@@ -1,4 +1,4 @@
-from flask.helpers import url_for
+from flask.helpers import flash, url_for
 from utils import tickets, events, users
 from app import app
 from flask import (
@@ -23,6 +23,9 @@ def ticket(ticket_id):
         )
     else:
         if not events.assert_user_owns_event(event.id): return
+        if len(request.form["extra-info"]) > 512:
+            flash("too_long_info")
+            return redirect(url_for("event_tickets", event.id))
         tickets.update_ticket_data(
             ticket_id,
             request.form["extra-info"]
