@@ -16,7 +16,7 @@
         <img src="https://quickchart.io/qr?text=https%3A%2F%2Ftsoha-keepgate.herokuapp.com%2Fpass%2F{{ valuepass.id }}%2Fmanage&margin=0&ecLevel=L&size=200&format=svg" alt="qr code"></img>
     </div>
     <div class="flex justify-center">
-        <span class="text-6xl font-bold">{{ valuepass.value }}</span>
+        <span class="text-6xl font-bold" id="pass-value">{{ valuepass.value }}</span>
     </div>
     {% if valuepass.extra_info or valuepass.user_id %}
         <div class="pt-3 border-t text-xl text-center flex-grow">
@@ -34,4 +34,15 @@
         Unstamp
     </div>
 </div>
+<script>
+    var valueDisplay = document.getElementById("pass-value");
+    setInterval(
+        function () {
+            fetch("{{ url_for('pass_value', pass_id=valuepass.id) }}")
+                .then(function (res) { return res.text() })
+                .then(function (val) { valueDisplay.innerText = val });
+        },
+        1000
+    )
+</script>
 {% endblock %}
