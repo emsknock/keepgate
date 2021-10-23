@@ -148,7 +148,7 @@ def new_event():
         if date != "" and not re.match(r"\d{4}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])", date):
             return abort(400)
         if not can_make_event:
-            return url_for("new_event")
+            return redirect(url_for("new_event"))
         event_id = events.new_event(
             session["user_id"],
             title,
