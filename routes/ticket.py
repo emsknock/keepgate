@@ -9,10 +9,10 @@ from flask import (
     abort
 )
 
-@app.route("/ticket/<id>", methods=["GET", "POST"])
+@app.route("/ticket/<ticket_id>", methods=["GET", "POST"])
 @users.checks_csrf
-def ticket(id):
-    ticket = tickets.get_ticket(id)
+def ticket(ticket_id):
+    ticket = tickets.get_ticket(ticket_id)
     event = events.get_event_info(ticket.event_id)
     if not ticket:
         return abort(404)
@@ -25,19 +25,19 @@ def ticket(id):
     else:
         if not events.assert_user_owns_event(event.id): return
         tickets.update_ticket_data(
-            id,
+            ticket_id,
             request.form["extra-info"]
         )
         return redirect(url_for("event_tickets", event.id))
 
-@app.route("/ticket/<id>/check")
+@app.route("/ticket/<ticket_id>/check")
 @users.requires_signin
-def ticket_check(id):
-    ticket = tickets.get_ticket(id)
+def ticket_check(ticket_id):
+    ticket = tickets.get_ticket(ticket_id)
     event = events.get_event_info(ticket.event_id)
     if not ticket:
         return abort(404)
-    tickets.stamp_ticket(id, session["user_id"])
+    tickets.stamp_ticket(ticket_id, session["user_id"])
     return render_template(
         "ticket_check.html",
         ticket=ticket,
