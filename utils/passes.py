@@ -49,8 +49,8 @@ def update_pass_data(pass_id, extra_info = None):
 def pass_modify_value(pass_id, value, user_id):
     new_value = exec(
         """
-        INSERT INTO pass_transactions (pass_id, user_id, value, time)
-        VALUES (:pass_id, :user_id, :value, CURRENT_TIMESTAMP)
+        INSERT INTO pass_transactions (pass_id, user_id, value)
+        VALUES (:pass_id, :user_id, :value)
         ;
         UPDATE passes
         SET value = value + :value
